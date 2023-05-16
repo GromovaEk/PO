@@ -11,6 +11,11 @@ namespace PO2
         public const string Zero = "0/1";
         public const string Delim = "/";
 
+        public enum FractionStates { numerator = 0, denominator }
+        FractionStates FractionState { get; set; }
+
+        // состояние тут
+
         public override bool isZero()
         {
             return (Str == Zero || Str == "-" + Zero);
@@ -18,36 +23,41 @@ namespace PO2
 
         public override void Add(char ch)
         {
-            str.Append(ch);
+            Str.Append(ch);
         }
 
         public override void Add(string a)
         {
-            str += a;
+            Str += a;
         }
 
         public override void AddSeparator()
         {
-            if (Str.Substring(Str.Length - 1) != Delim)
-                Add(Delim);
+            if(FractionState == FractionStates.numerator)
+            {
+                FractionState = FractionStates.denominator;
+                Str = Str.Remove(Str.Length - 1);
+            }
         }
         public override void AddSign(char sign)
         {
-            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != '/' && Str.Last() != '*')
+            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != ':' && Str.Last() != '*')
             {
-                str.Append(sign);
+                Str += sign;
             }
             else
             {
                 //str[str.Length - 1] = sign;
-                str = str.Substring(0, str.Length - 1);
-                str += sign;
+                Str = Str.Substring(0, Str.Length - 1);
+                Str += sign;
             }
+
+            FractionState = FractionStates.numerator;
         }
 
         public override void AddMinusFront()
         {
-            if (str[0] != '-')
+            if (Str[0] != '-')
                 Str = "-" + Str;
             else
                 Str = Str.Substring(1);
@@ -55,43 +65,85 @@ namespace PO2
 
         public override void AddDigit(int a)
         {
-           
-            string s = a.ToString();
+            string s = Converter.longToChar(a).ToString();
+            //string s = a.ToString();
             if (isZero())
             {
                 if (Str.Length == 3)
-                    
-                    Str = s;
+                    Str = s + "/1";
                 else
-                    Str = "-" + s;
+                    Str = "-" + s + "/1";
             }
             else
             {
-                str += s;
-            }
+                if(FractionState == FractionStates.numerator)
+                {
+                    if (Str.IndexOf("/1", Str.Length - 2) == Str.Length - 2) // если последние 2 сивола - единичный знаметель - удалить их 
+                        Str = Str.Remove(Str.Length - 2);
+                    Str += s + "/1";
 
+                    // добавлять символ
+                    // добавлять единичный знаменатель
+
+
+                    //int index = Str.IndexOf(Delim);
+                    //Str = Str.Substring(0, index) + s + "/1";
+                }
+                else
+                {
+                    if(!(Str.Last() == '/' && s == "0")) // случай ввода знаменателя = 0
+                        Str += s;
+                    
+                }
+                    
+            }
         }
 
         public override void AddZero()
         {
             if (!isZero())
-                str += Zero;
+                Str += Zero;
         }
 
         public override void Backspace()
         {
             if (!isZero())
             {
-                str.Remove(Str.Length - 1, 1);
-                if (Str.Length == 0)
-                    Str = Zero;
+                if(Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
+                    Str = Str.Remove(Str.Length - 1, 1);
+                else if (FractionState == FractionStates.numerator)
+                {
+                    Str = Str.Remove(Str.Length - 3, 1);
+
+                    // если удалили всё число
+                    if (Str.Length == 2 || Str.Length == 3 && Str.First()=='-')
+                    {
+                        Str = Zero;
+                    }
+                    else
+                    {
+                        // если удалили всё крайнее число
+                        string last = Str.Substring(Str.Length - 3, 1);
+                        if (last == "+" || last == "-" || last == "*" || last == ":")
+                            Str = Str.Remove(Str.Length - 2, 2);
+                    }
+                }
+                else
+                {
+                    Str = Str.Remove(Str.Length - 1, 1);
+
+                    if (Str.Last().ToString() == Delim)
+                    {
+                        FractionState = FractionStates.numerator;
+                        Str = Str + "1";
+                    }
+                }
             }
         }
 
-        public override void Clear() { Str = Zero; }
+        public override void Clear() { Str = Zero; FractionState = FractionStates.numerator; }
 
-
-        public FEditor() { str = Zero; }
+        public FEditor() { Str = Zero; }
 
         public void Edit() { }
 

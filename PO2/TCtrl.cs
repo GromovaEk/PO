@@ -4,26 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 namespace PO2
 {
     public class TCtrl<T> where T : TANumber, new()
     {
         public enum States { l_val = 0, op, r_val, func }
-        public enum FractionStates { numerator = 0, denominator }
         
         public bool floatMode;
 
         private const string funcInv = "^(-1)";
         private const string funcSqr = "^2";
-        AEditor Editor { get; set; }
+        public AEditor Editor { get; set; }
         TProc<T> Processor { get; set; }
         public TMemory<T> Memory { get; set; }
 
         States State { get; set; }
-        FractionStates FractionState { get; set; }
-
+        
         int P = 10;
         int Acc = 5;
         T Number { get; set; }
@@ -40,7 +36,7 @@ namespace PO2
                 case 28:
                     return '*';
                 case 29:
-                    return '/';
+                    return ':';
                 default:
                     return '\0';
             }
@@ -48,14 +44,14 @@ namespace PO2
 
         private static bool IsOperator(char ch)
         {
-            return (ch == '-' || ch == '+' || ch == '*' || ch == '/');
+            return (ch == '-' || ch == '+' || ch == '*' || ch == ':');
         }
 
         public TCtrl()
         {
-            if(typeof(T).Name == "TPNumber")
+            if (typeof(T).Name == "TPNumber")
                 Editor = new PEditor();
-            else if(typeof(T).Name == "TFrac")
+            else if (typeof(T).Name == "TFrac")
                 Editor = new FEditor();
 
             Processor = new TProc<T>();
@@ -70,21 +66,20 @@ namespace PO2
             // Ввод цифры
             if (0 <= i && i <= 15)
             {
-                if (i == 0)
-                    Editor.AddZero();
-                else
+                //if (i == 0)
+                    //Editor.AddZero();
+                //else
                     Editor.AddDigit(i);
-
+                    
+                    
                 if (State == States.l_val)
-                    Processor.Lop_Res.ValueStr = Editor.Str;
-                    //Processor.Lop_Res.SetNumStr(Editor.Str);
-           
+                Processor.Lop_Res.SetNumStr(Editor.Str);
+                
                 else
                 {
                     int start = Editor.Str.IndexOf((char)Processor.Operation, 1);
                     string tmp = Editor.Str.Substring(start + 1);
-                    Processor.Rop.ValueStr = tmp;
-                    //Processor.Rop.SetNumStr(tmp);
+                    Processor.Rop.SetNumStr(tmp);
                     State = States.r_val;
                 }
                 number = Editor.Str;
@@ -173,8 +168,12 @@ namespace PO2
                     {
                         State = States.op;
                         Processor.Rop = new T();
-                        //Processor.Rop.Acc = Acc;  ???????????????????????????????????
-                        //Processor.Rop.P = P;
+
+                        if (typeof(T).Name == "TPNumber")
+                        {
+                            (Processor as TProc<TPNumber>).Rop.Acc = Acc;
+                            (Processor as TProc<TPNumber>).Rop.P = P;
+                        }
                     }
                 }
                 else if (old_state == States.op)
@@ -182,12 +181,16 @@ namespace PO2
                 else
                 {
                     Processor.Clear();
-                    /*Processor.Lop_Res.P = P;    ???????????????????????????????????
-                    Processor.Rop.P = P;
-                    Processor.Lop_Res.Acc = Acc;
-                    Processor.Rop.Acc = Acc;*/
+
+                    if (typeof(T).Name == "TPNumber")
+                    {
+                        (Processor as TProc<TPNumber>).Lop_Res.P = P;
+                        (Processor as TProc<TPNumber>).Rop.P = P;
+                        (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
+                        (Processor as TProc<TPNumber>).Rop.Acc = Acc;
+                    }
                 }
-                    
+
 
                 return Editor.Str;
             }
@@ -195,9 +198,14 @@ namespace PO2
             // Смена знака
             if (i == 23)
             {
-                Processor.Lop_Res.ValueStr = "-" + Processor.Lop_Res.ValueStr;
-                //Processor.Lop_Res.Num = -Processor.Lop_Res.Num; ????????
-                Editor.AddMinusFront();
+                if(!Editor.isZero())
+                {
+                    if (Processor.Lop_Res.ValueStr.First() != '-')
+                        Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ValueStr);
+                    else
+                        Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr.Substring(1));
+                    Editor.AddMinusFront();
+                }
                 
                 return Editor.Str;
             }
@@ -205,14 +213,13 @@ namespace PO2
             // Ввод разделителя
             if (i == 24)
             {
-                if (!floatMode)
-                    return Editor.Str;
+                if (typeof(T).Name == "TPNumber")
+                    if (!floatMode)
+                        return Editor.Str;
+
                 if (State == States.l_val || State == States.r_val)
                     Editor.AddSeparator();
-                
-                if(Editor.GetType() == typeof(FEditor)) 
-                    FractionState = FractionStates.denominator;
-                
+                                
                 return Editor.Str;
             }
 
@@ -237,8 +244,16 @@ namespace PO2
                         Processor.ExecOperation();
                         Processor.ExecFunction();
                     }
-                    //if (!floatMode)
+
+
+                    if (typeof(T).Name == "TPNumber")
+                    {
+                        if (!floatMode)
+                            Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr);
                         //Processor.Lop_Res.Num = checked((long)Processor.Lop_Res.Num);
+                    }
+
+
                     Editor.Str = Processor.Lop_Res.ValueStr;
                     State = States.l_val;
                     return Editor.Str;
@@ -297,31 +312,57 @@ namespace PO2
             // Изменение основания системы счисления
             if (32 <= i && i <= 46)
             {
-                /*P = i - 30;
-                Processor.Lop_Res.P = P;
-                Processor.Rop.P = P;
-                Editor.Str = Processor.Lop_Res.ValueStr;
-                if (State != States.l_val)
+                if (typeof(T).Name == "TPNumber")
                 {
-                    Editor.Str += (char)Processor.Operation;
-                    if (State == States.r_val)
-                        Editor.Str += Processor.Rop.ValueStr;
+                    P = i - 30;
+                    (Processor as TProc<TPNumber>).Lop_Res.P = P;
+                    (Processor as TProc<TPNumber>).Rop.P = P;
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    if (State != States.l_val)
+                    {
+                        Editor.Str += (char)Processor.Operation;
+                        if (State == States.r_val)
+                            Editor.Str += Processor.Rop.ValueStr;
+                    }
+                    if (Memory.FState)
+                    {
+                        (Memory as TMemory<TPNumber>).FNumber.P = P;
+                    }
+                    return Editor.Str;
                 }
-                if (Memory.FState)
+                else if (typeof(T).Name == "TFrac")
                 {
-                    Memory.FNumber.P = P;
+                    P = i - 30;
+
+                    (Processor as TProc<TFrac>).Lop_Res.Num.P = P;
+                    (Processor as TProc<TFrac>).Lop_Res.Den.P = P;
+
+                    (Processor as TProc<TFrac>).Rop.Num.P = P;
+                    (Processor as TProc<TFrac>).Rop.Den.P = P;
+
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    if (State != States.l_val)
+                    {
+                        Editor.Str += (char)Processor.Operation;
+                        if (State == States.r_val)
+                            Editor.Str += Processor.Rop.ValueStr;
+                    }
+                    if (Memory.FState)
+                    {
+                        (Memory as TMemory<TFrac>).FNumber.Num.P = P;
+                        (Memory as TMemory<TFrac>).FNumber.Den.P = P;
+                    }
+                    return Editor.Str;
                 }
-                return Editor.Str;*/
+
             }
 
             // Режим целых
             if (i == 47)
             {
-                
                 floatMode = false;
                 if (State == States.l_val)
                 {
-                    // Что-то решить с работой над  числами
                     //Processor.Lop_Res.Num = (int)Processor.Lop_Res.Num;
                     Editor.Str = Processor.Lop_Res.ValueStr;
                 }                
@@ -339,23 +380,24 @@ namespace PO2
             // Изменение точности
             if (49 <= i && i <= 56)
             {
-                /*
-                Acc = i - 47;
-                Processor.Lop_Res.Acc = Acc;
-                Processor.Rop.Acc = Acc;
-                Editor.Str = Processor.Lop_Res.ValueStr;
-                if (State != States.l_val)
+                if (typeof(T).Name == "TPNumber")
                 {
-                    Editor.Str += (char)Processor.Operation;
-                    if (State == States.r_val)
-                        Editor.Str += Processor.Rop.ValueStr;
+                    Acc = i - 47;
+                    (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
+                    (Processor as TProc<TPNumber>).Rop.Acc = Acc;
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    if (State != States.l_val)
+                    {
+                        Editor.Str += (char)Processor.Operation;
+                        if (State == States.r_val)
+                            Editor.Str += Processor.Rop.ValueStr;
+                    }
+                    if (Memory.FState)
+                    {
+                        (Memory as TMemory<TPNumber>).FNumber.Acc = Acc;
+                    }
+                    return Editor.Str;
                 }
-                if (Memory.FState)
-                {
-                    Memory.FNumber.Acc = Acc;
-                }
-                return Editor.Str;
-                */
             }
 
             // Выключить память

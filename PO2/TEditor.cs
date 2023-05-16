@@ -19,12 +19,12 @@ namespace PO2
 
         public override void Add(char ch) 
         {
-            str.Append(ch); 
+            Str.Append(ch); 
         }
 
         public override void Add(string a)
         {
-            str += a;
+            Str += a;
         }
 
         public override void AddSeparator()
@@ -34,22 +34,22 @@ namespace PO2
         }
         public override void AddSign(char sign) 
         {
-            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != '/' && Str.Last() != '*')
+            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != ':' && Str.Last() != '*')
             {
-                str.Append(sign);
+                Str += sign;
             }
             else
             {
                 //str[str.Length - 1] = sign;
-                str = str.Substring(0, str.Length - 1);
-                str += sign;
+                Str = Str.Substring(0, Str.Length - 1);
+                Str += sign;
 
             }
         }
 
         public override void AddMinusFront()
         {
-            if (str[0] != '-')
+            if (Str[0] != '-')
                 Str = "-" + Str;
             else
                 Str = Str.Substring(1);
@@ -66,7 +66,7 @@ namespace PO2
             }
 
             char ch = Converter.longToChar(a);
-            str.Append(ch);
+            Str += ch;
         }
 
 
@@ -74,15 +74,18 @@ namespace PO2
         public override void AddZero() 
         {
             if (!isZero())
-                str += Zero; 
+                Str += Zero; 
         }
 
         public override void Backspace() 
         {
             if (!isZero())
             {
-                str.Remove(Str.Length - 1, 1);
+                Str = Str.Remove(Str.Length - 1, 1);
+                
                 if (Str.Length == 0)
+                    Str = Zero;
+                else if(Str == "-")
                     Str = Zero;
             }
         }
@@ -90,7 +93,7 @@ namespace PO2
         public override void Clear() { Str = Zero;  }
    
 
-        public PEditor() { str = Zero; }
+        public PEditor() { Str = Zero; }
 
         public void Edit() { }
 

@@ -427,7 +427,7 @@ namespace PO2
             this.buttonDelim.Size = new System.Drawing.Size(75, 58);
             this.buttonDelim.TabIndex = 2;
             this.buttonDelim.TabStop = false;
-            this.buttonDelim.Text = "/";
+            this.buttonDelim.Text = ":";
             this.buttonDelim.UseVisualStyleBackColor = true;
             this.buttonDelim.Click += new System.EventHandler(this.buttonDelim_Click);
             // 
@@ -516,6 +516,7 @@ namespace PO2
             this.комплексноеЧислоToolStripMenuItem.Name = "комплексноеЧислоToolStripMenuItem";
             this.комплексноеЧислоToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.комплексноеЧислоToolStripMenuItem.Text = "Комплексное число";
+            this.комплексноеЧислоToolStripMenuItem.Click += new System.EventHandler(this.комплексноеЧислоToolStripMenuItem_Click);
             // 
             // domainUpDown1
             // 
@@ -569,6 +570,7 @@ namespace PO2
             // richTextBox1
             // 
             this.richTextBox1.AutoSize = true;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(17, 46);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(16, 17);
@@ -593,10 +595,10 @@ namespace PO2
             this.checkedListBox1.Items.AddRange(new object[] {
             "Целые",
             "Дробные"});
-            this.checkedListBox1.Location = new System.Drawing.Point(373, 537);
+            this.checkedListBox1.Location = new System.Drawing.Point(398, 543);
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(137, 55);
+            this.checkedListBox1.Size = new System.Drawing.Size(106, 55);
             this.checkedListBox1.TabIndex = 8;
             this.checkedListBox1.UseTabStops = false;
             this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);

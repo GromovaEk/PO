@@ -8,7 +8,7 @@ namespace PO2
 {
     class TProc<T> where T : TANumber, new()
     {
-        public enum Operations { None = '\0', Add = '+', Sub = '-', Mul = '*', Dvd = '/' }
+        public enum Operations { None = '\0', Add = '+', Sub = '-', Mul = '*', Dvd = ':' }
 
         public enum Functions { None = 0, Inv, Sqr }
         public Operations Operation { get;  set; }

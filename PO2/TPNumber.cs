@@ -10,15 +10,17 @@ namespace PO2
     public class TPNumber : TANumber
     {
         const char delim = ',';
+        
         public override string ValueStr
         {
-            get { return Converter.Convert(num, p, acc, Delim); }
-            set { }
+            get { return Converter.Convert(Value, p, acc, Delim); }
+            set { ValueStr = value; }
         }
+
+        //public override string ValueStr { set; get; }
 
 
         private int p;
-
         public int P
         {
             get { return p; }
@@ -39,30 +41,33 @@ namespace PO2
             set { acc = value; }
         }
 
-        private double num;
+        //private double NumP;
 
-        public double Num
+        public double Value { set; get; } = 0.0;
+
+
+        public TPNumber() { Value = 0.0; acc = 5; p = 10; Delim = ','; }
+
+        public TPNumber(double num)
         {
-            get { return num; }
-            set { num = value; }
+            Value = num;
+
         }
 
-        public TPNumber() { num = 0.0; acc = 5; p = 10; Delim = ','; }
+        public TPNumber(string _Value, int _P, int _Accuracy) { Value = Converter.Convert(_Value, _P, Delim); p = _P; acc = _Accuracy; }
 
-        public TPNumber(string _Value, int _P, int _Accuracy) { num = Converter.Convert(_Value, _P, Delim); p = _P; acc = _Accuracy; }
-
-        public TPNumber(double _Num, int _P, int _Accuracy) { num = _Num; p = _P; acc = _Accuracy; }
+        public TPNumber(double _Num, int _P, int _Accuracy) { Value = _Num; p = _P; acc = _Accuracy; }
 
         public TPNumber(TPNumber d) 
         {
-            Num = d.Num;
+            Value = d.Value;
             P = d.P;
             Acc = d.Acc;
         }
 
         public override object Clone()
         {
-            return new TPNumber(Num, P, Acc);
+            return new TPNumber(Value, P, Acc);
         }
 
 
@@ -75,7 +80,7 @@ namespace PO2
         {
             if (P != (d as TPNumber).P) 
                 throw new BaseException("Разные основания в operator+\n");
-            double res = Num + (d as TPNumber).Num;
+            double res = Value + (d as TPNumber).Value;
             if (double.IsInfinity(res))
                 throw new OverflowException();
             return new TPNumber(res, P, Acc);
@@ -85,7 +90,7 @@ namespace PO2
         {
             if (P != (d as TPNumber).P)
                 throw new BaseException("Разные основания в operator-\n");
-            double res = Num - (d as TPNumber).Num;
+            double res = Value - (d as TPNumber).Value;
             if (double.IsInfinity(res))
                 throw new OverflowException();
             return new TPNumber(res, P, Acc);
@@ -95,7 +100,7 @@ namespace PO2
         {
             if (P != (d as TPNumber).P)
                 throw new BaseException("Разные основания в operator*\n");
-            double res = Num * (d as TPNumber).Num;
+            double res = Value * (d as TPNumber).Value;
             if (double.IsInfinity(res))
                 throw new OverflowException();
             return new TPNumber(res, P, Acc);
@@ -107,9 +112,9 @@ namespace PO2
         {
             if (P != (d as TPNumber).P)
                 throw new BaseException("Разные основания в operator/\n");
-            if ((d as TPNumber).Num == 0)
+            if ((d as TPNumber).Value == 0)
                 throw new ArithmeticException("Ошибка: деление на ноль\n");
-            double res = Num / (d as TPNumber).Num;
+            double res = Value / (d as TPNumber).Value;
             if (double.IsInfinity(res))
                 throw new OverflowException();
             return new TPNumber(res, P, Acc);
@@ -122,7 +127,7 @@ namespace PO2
 
         public string StrNum()
         {
-            return num.ToString();
+            return Value.ToString();
         }
 
         public string StrAcc()
@@ -140,9 +145,18 @@ namespace PO2
             p = Convert.ToInt32(_P);
         }
 
-        public void SetNumStr(string _Num)
+        public override void SetNumStr(string _Num)
         {
-            num = Converter.Convert(_Num, p, delim);
+            if(_Num.Length > 0)
+            {
+                if (_Num.First() == '-')
+                {
+                    Value = Converter.Convert(_Num.Substring(1), p, delim);
+                    Value *= -1;
+                }
+                else
+                    Value = Converter.Convert(_Num, p, delim);
+            }
         }
     }
 }

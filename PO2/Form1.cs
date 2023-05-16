@@ -37,14 +37,11 @@ namespace PO2
             Buttons[15] = button15;
 
             checkedListBox1.SetItemChecked(0, true);
-
         }
 
-        //private TCtrl<TFrac> CtrlTPN;
         private TCtrl<TPNumber> CtrlTPN;
         private TCtrl<TFrac> CtrlTF;
-        // private TCtrl<TFrac> CtrlTPN; в будущем для комплексного числа
-
+        
         private enum ControlType {
             PController,            
             FractionController,     
@@ -65,6 +62,15 @@ namespace PO2
                     Buttons[i].Enabled = i < n ? true : false;
                 richTextBox1.Text = CtrlTPN.Command(30 + n);
                 MemoryValue.Text = CtrlTPN.Memory.GetStr();
+            }
+            if (controller_type == ControlType.FractionController)
+            {
+                label1.Focus();
+                int n = Convert.ToInt32(domainUpDown1.SelectedItem.ToString());
+                for (int i = 1; i < 16; i++)
+                    Buttons[i].Enabled = i < n ? true : false;
+                richTextBox1.Text = CtrlTF.Command(30 + n); 
+                MemoryValue.Text = CtrlTF.Memory.GetStr();
             }
         }
 
@@ -310,37 +316,93 @@ namespace PO2
         private void button10_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(10);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(10);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(10);
+                    break;
+            }
+
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(11);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(11);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(11);
+                    break;
+            }
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(12);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(12);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(12);
+                    break;
+            }
+
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(13);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(13);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(13);
+                    break;
+            }
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(14);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(14);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(14);
+                    break;
+            }
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
             label1.Focus();
-            richTextBox1.Text = CtrlTPN.Command(15);
+
+            switch (controller_type)
+            {
+                case ControlType.PController:
+                    richTextBox1.Text = CtrlTPN.Command(15);
+                    break;
+                case ControlType.FractionController:
+                    richTextBox1.Text = CtrlTF.Command(15);
+                    break;
+            }
         }
         // Добавить в память
         private void buttonMpl_Click(object sender, EventArgs e)
@@ -648,7 +710,7 @@ namespace PO2
             }
         }
 
-        //Смена режима работы (целые/дробные)
+        //включение памяти 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             if (controller_type == ControlType.PController)
@@ -658,6 +720,14 @@ namespace PO2
                 else
                     richTextBox1.Text = CtrlTPN.Command(57);
                 MemoryValue.Text = CtrlTPN.Memory.GetStr();
+            }
+            else if (controller_type == ControlType.FractionController)
+            {
+                if(checkBox3.Checked)
+                    richTextBox1.Text = CtrlTF.Command(58);
+                else
+                    richTextBox1.Text = CtrlTF.Command(57);
+                MemoryValue.Text = CtrlTF.Memory.GetStr();
             }
         }
 
@@ -699,9 +769,9 @@ namespace PO2
                 richTextBox1.Text = CtrlTPN.Command(47);
             }
             
-
             controller_type = ControlType.PController;
-            
+            richTextBox1.Text = CtrlTPN.Editor.Str;
+            MemoryValue.Text = CtrlTPN.Memory.GetStr();
         }
 
         private void простаяДробьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -709,13 +779,24 @@ namespace PO2
             for (int i = 1; i < 16; i++)
                 Buttons[i].Enabled = i < 10 ? true : false;
 
-            domainUpDown1.Enabled = false;
+            //domainUpDown1.Enabled = false;
             domainUpDown2.Enabled = false;
             checkedListBox1.Enabled = false;
             buttonComma.Text = "/";
             buttonComma.Enabled = true;
 
             controller_type = ControlType.FractionController;
+            if(checkBox3.Checked)
+                CtrlTF.Memory.FState = true;
+
+            richTextBox1.Text = CtrlTF.Editor.Str;
+            MemoryValue.Text = CtrlTF.Memory.GetStr();
+
+        }
+
+        private void комплексноеЧислоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

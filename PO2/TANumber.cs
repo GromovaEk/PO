@@ -10,7 +10,7 @@ namespace PO2
     {
         public abstract string ValueStr { get; set; }
 
-        public string valuestr;
+        //public string valuestr;
 
         public static char Delim { get; set; }
 
@@ -51,6 +51,8 @@ namespace PO2
         {
             return NeutralMul().Divide(this);
         }
+
+        public abstract void SetNumStr(string _Num);
 
     }
 }

@@ -8,13 +8,7 @@ namespace PO2
 {
     public abstract class AEditor
     {
-
-		public string str;
-		public string Str
-		{
-			get { return str.ToString(); }
-			set { str = value; }
-		}
+		public string Str { get; set; }
 
 		public abstract void Add(string numeral);
 		public abstract void Add(char numeral);
