@@ -130,14 +130,13 @@ namespace PO2
                 }
                 else
                 {
+                    Str = Str.Remove(Str.Length - 1, 1);
+
                     if (Str.Last().ToString() == Delim)
                     {
                         FractionState = FractionStates.numerator;
                         Str = Str + "1";
-                        Backspace();
                     }
-                    else
-                        Str = Str.Remove(Str.Length - 1, 1);
                 }
             }
         }
