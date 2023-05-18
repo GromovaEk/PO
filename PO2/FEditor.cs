@@ -8,8 +8,13 @@ namespace PO2
 {
     class FEditor : AEditor
     {
-        public const string Zero = "0/1";
-        public const string Delim = "/";
+        public string Zero
+        {
+            get { return "0" + Delim + "1"; }
+            private set { }
+        }
+
+        public static string Delim = "|";
 
         public enum FractionStates { numerator = 0, denominator }
         FractionStates FractionState { get; set; }
@@ -51,10 +56,8 @@ namespace PO2
         }
         public override void AddSign(char sign)
         {
-            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != ':' && Str.Last() != '*')
-            {
+            if (!LastIsSign())
                 Str += sign;
-            }
             else
             {
                 //str[str.Length - 1] = sign;
@@ -80,17 +83,17 @@ namespace PO2
             if (IsZero())
             {
                 if (Str.Length == 3)
-                    Str = s + "/1";
+                    Str = s + Delim + "1";
                 else
-                    Str = "-" + s + "/1";
+                    Str = "-" + s + Delim + "1";
             }
             else
             {
                 if(FractionState == FractionStates.numerator)
                 {
-                    if (Str.IndexOf("/1", Str.Length - 2) == Str.Length - 2) // если последние 2 сивола - единичный знаметель - удалить их 
+                    if (Str.IndexOf(Delim + "1", Str.Length - 2) == Str.Length - 2) // если последние 2 сивола - единичный знаметель - удалить их 
                         Str = Str.Remove(Str.Length - 2);
-                    Str += s + "/1";
+                    Str += s + Delim + "1";
 
                     // добавлять символ
                     // добавлять единичный знаменатель
@@ -118,7 +121,7 @@ namespace PO2
         {
             if (!IsZero())
             {
-                if(Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
+                if(LastIsSign())
                     Str = Str.Remove(Str.Length - 1, 1);
                 else if (FractionState == FractionStates.numerator)
                 {
@@ -132,9 +135,7 @@ namespace PO2
                     else
                     {
                         // если удалили всё крайнее число
-                        string last = Str.Substring(Str.Length - 3, 1);
-                        if (last == "+" || last == "-" || last == "*" || last == ":")
-                            Str = Str.Remove(Str.Length - 2, 2);
+                        Str = Str.Substring(0, Str.Length - 2);
                     }
                 }
                 else

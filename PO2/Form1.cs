@@ -919,7 +919,7 @@ namespace PO2
             //domainUpDown1.Enabled = false;
             domainUpDown2.Enabled = false;
             checkedListBox1.Enabled = false;
-            buttonComma.Text = "/";
+            buttonComma.Text = FEditor.Delim;
             buttonComma.Enabled = true;
 
             controller_type = ControlType.FractionController;

@@ -15,7 +15,7 @@ namespace PO2
 
         public override string ToString()
         {
-            return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
+            return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + FEditor.Delim +
                     Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
         }
 
@@ -44,15 +44,15 @@ namespace PO2
         public TFrac(string num_str)
         {
             double n, d;
-            int index = ToString().IndexOf("/"); 
+            int index = ToString().IndexOf(FEditor.Delim); 
             string[] f;
 
-            f = ToString().Split('/'); 
+            f = ToString().Split(FEditor.Delim.ToCharArray());
             
-            if (ToString() == "/")
+            if (ToString() == FEditor.Delim)
             {
                 Num = new TPNumber(0); Den = new TPNumber(1);
-                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
+                SetNumStr(Num.Value.ToString() + FEditor.Delim + Den.Value.ToString());
             }
             else if (f.Length == 1)
             {
@@ -61,13 +61,13 @@ namespace PO2
                     Den = new TPNumber(1);
                 else if (Double.TryParse(f[1], out d)) Den = new TPNumber(d);
                 Reduce();
-                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
+                SetNumStr(Num.Value.ToString() + FEditor.Delim + Den.Value.ToString());
             }
             else
             {
                 Double.TryParse(ToString(), out n); Num = new TPNumber(n);
                 Den = new TPNumber(1);
-                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
+                SetNumStr(Num.Value.ToString() + FEditor.Delim + Den.Value.ToString());
             }
 
         }
@@ -106,14 +106,14 @@ namespace PO2
         //Выделить числитель из строки
         public string Get_num_from_string()
         {
-            int index = ToString().IndexOf("/");
+            int index = ToString().IndexOf(FEditor.Delim);
             return ToString().Substring(0, index);
         }
 
         //Выделить знаменатель из строки
         public string Get_den_from_string()
         {
-            int index = ToString().IndexOf("/");
+            int index = ToString().IndexOf(FEditor.Delim);
             return ToString().Substring(index + 1, ToString().Length - index + 1);
         }
 
@@ -209,7 +209,7 @@ namespace PO2
 
         public override void SetNumStr(string _Num)
         {
-            int index = _Num.IndexOf("/");
+            int index = _Num.IndexOf(FEditor.Delim);
 
             Num = new TPNumber(_Num.Substring(0, index), 10, 5);
             Den = new TPNumber(_Num.Substring(index + 1, _Num.Length - index - 1), 10, 5);
