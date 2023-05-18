@@ -177,7 +177,7 @@ namespace PO2
             StringBuilder sb = new StringBuilder();
             while (!IsSign(Str[i]))
             {
-                sb.Append(Str[i]);
+                sb.Insert(0, Str[i]);
                 i--;
             }
             return sb.ToString();
