@@ -135,13 +135,12 @@ namespace PO2
                     if (State == States.l_val)
                     {
                         Editor.Str = Memory.GetStr();
-                        Processor.Lop_Res = Memory.FNumber;
+                        Processor.Lop_Res = (T)Memory.FNumber.Clone();
                     }
                     else if (State == States.op)
                     {
-                        Editor.Str += Memory.GetStr();
-                        Processor.Rop.ValueStr = Memory.GetStr(); //?
-                        //Processor.Rop.Num = Memory.GetNum();
+                        Editor.Str += Memory.FNumber.ValueStr;
+                        Processor.Rop = (T)Memory.FNumber.Clone();
                         State = States.r_val;
                     }                 
                 }
