@@ -14,7 +14,7 @@ namespace PO2
         public enum ComplexStates { real = 0, imaginary }
         ComplexStates ComplexState { get; set; }
 
-        public override bool isZero()
+        public override bool IsZero()
         {
             return (Str == Zero || Str == "-" + Zero); //????
         }
@@ -69,7 +69,7 @@ namespace PO2
             //string s = a.ToString();
 
 
-            if (isZero())
+            if (IsZero())
             {
                 if (Str.Length == 5)
                     Str = s + "+i*0";
@@ -101,14 +101,14 @@ namespace PO2
 
         public override void AddZero()
         {
-            if (!isZero())
+            if (!IsZero())
                 Str += Zero;
         }
 
         public override void Backspace()
         {
             
-            if (!isZero())
+            if (!IsZero())
             {
                 if (Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
                     Str = Str.Remove(Str.Length - 1, 1);
@@ -150,5 +150,19 @@ namespace PO2
 
         public void Edit() { }
 
+        public override void PopLastNumber()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetLastNumber()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool LastIsSign()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

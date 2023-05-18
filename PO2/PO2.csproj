@@ -70,7 +70,7 @@
     <Compile Include="TMemory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TEditor.cs" />
+    <Compile Include="PEditor.cs" />
     <Compile Include="TPNumber.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

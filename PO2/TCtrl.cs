@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace PO2
 {
     public class TCtrl<T> where T : TANumber, new()
     {
-        public enum States { l_val = 0, op, r_val, func }
+        public enum States { l_val = 0, op, r_val }
         
         public bool floatMode;
 
@@ -61,6 +62,13 @@ namespace PO2
             State = States.l_val;
             Number = new T();
             floatMode = false;
+        }
+
+        public void ClearAll()
+        {
+            Editor.Str = PEditor.Zero;
+            Processor.Clear();
+            State = States.l_val;
         }
 
         public string Command(int i)
@@ -160,22 +168,11 @@ namespace PO2
             // Backspace
             if (i == 22)
             {
-                States old_state = State;
-                if (old_state == States.func)
-                {
-                    if (Processor.Function == TProc<T>.Functions.Sqr)
-                        for (int j = 0; j < funcSqr.Length; j++) { Editor.Backspace(); }
-                    else
-                        for (int j = 0; j < funcInv.Length; j++) { Editor.Backspace(); }
-                    State = States.l_val;
-                    Processor.ResetFunc();
-                    return Editor.Str;
-                }
-
+                States oldState = State;
                 Editor.Backspace();
-                if (old_state == States.r_val)
+                if (oldState == States.r_val)
                 {
-                    if (IsOperator(Editor.Str.Last()))
+                    if (Editor.LastIsSign())
                     {
                         State = States.op;
                         Processor.Rop = new T();
@@ -185,67 +182,14 @@ namespace PO2
                             (Processor as TProc<TPNumber>).Rop.Acc = Acc;
                             (Processor as TProc<TPNumber>).Rop.P = P;
                         }
-                        else if (typeof(T).Name == "TFrac")
-                        {
-                            (Processor as TProc<TFrac>).Rop.Num.Acc = Acc;
-                            (Processor as TProc<TFrac>).Rop.Den.Acc = Acc;
-
-                            (Processor as TProc<TFrac>).Rop.Num.P = P;
-                            (Processor as TProc<TFrac>).Rop.Den.P = P;
-                        }
-                        else if (typeof(T).Name == "TComp")
-                        {
-                            (Processor as TProc<TComp>).Rop.Re.Acc = Acc;
-                            (Processor as TProc<TComp>).Rop.Im.Acc = Acc;
-
-                            (Processor as TProc<TComp>).Rop.Re.P = P;
-                            (Processor as TProc<TComp>).Rop.Im.P = P;
-                        }
                     }
+                    else
+                        Processor.Rop.SetNumStr(Editor.GetLastNumber()); 
                 }
-                else if (old_state == States.op)
-                    Processor.ResetOp();
+                else if (oldState == States.op)
+                    Processor.Reset();
                 else
-                {
-                    Processor.Clear();
-
-                    if (typeof(T).Name == "TPNumber")
-                    {
-                        (Processor as TProc<TPNumber>).Lop_Res.P = P;
-                        (Processor as TProc<TPNumber>).Rop.P = P;
-                        (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
-                        (Processor as TProc<TPNumber>).Rop.Acc = Acc;
-                    }
-                    else if (typeof(T).Name == "TFrac")
-                    {
-                        (Processor as TProc<TFrac>).Lop_Res.Num.P = P;
-                        (Processor as TProc<TFrac>).Lop_Res.Den.P = P;
-
-                        (Processor as TProc<TFrac>).Rop.Num.P = P;
-                        (Processor as TProc<TFrac>).Rop.Den.P = P;
-
-                        (Processor as TProc<TFrac>).Lop_Res.Num.Acc = Acc;
-                        (Processor as TProc<TFrac>).Lop_Res.Den.Acc = Acc;
-
-                        (Processor as TProc<TFrac>).Rop.Num.Acc = Acc;
-                        (Processor as TProc<TFrac>).Rop.Den.Acc = Acc;
-                    }
-                    else if (typeof(T).Name == "TComp")
-                    {
-                        (Processor as TProc<TComp>).Lop_Res.Re.P = P;
-                        (Processor as TProc<TComp>).Lop_Res.Im.P = P;
-
-                        (Processor as TProc<TComp>).Rop.Re.P = P;
-                        (Processor as TProc<TComp>).Rop.Im.P = P;
-
-                        (Processor as TProc<TComp>).Lop_Res.Re.Acc = Acc;
-                        (Processor as TProc<TComp>).Lop_Res.Im.Acc = Acc;
-
-                        (Processor as TProc<TComp>).Rop.Re.Acc = Acc;
-                        (Processor as TProc<TComp>).Rop.Im.Acc = Acc;
-                    }
-                }
-
+                    Processor.Lop_Res.SetNumStr(Editor.Str);
 
                 return Editor.Str;
             }
@@ -253,16 +197,16 @@ namespace PO2
             // Смена знака
             if (i == 23)
             {
-                /*if(!Editor.isZero())
+                if(!Editor.IsZero())
                 {
                     if (Processor.Lop_Res.ValueStr.First() != '-')
                         Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ValueStr);
                     else
                         Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr.Substring(1));
                     Editor.AddMinusFront();
-                }*/
+                }
 
-                if (!Editor.isZero())
+                if (!Editor.IsZero())
                 {
 
                 }
@@ -289,41 +233,14 @@ namespace PO2
             {
                 try
                 {
-                    if (State == States.op)
-                    {
-                        Processor.Rop = Processor.Lop_Res;
-                        Processor.ExecOperation();
-                        Processor.ResetFunc();
-                    }
-                    else if (State == States.func)
-                    {
-                        Processor.ExecFunction();
-                        Processor.ResetOp();                    
-                    }
-                    else
-                    {
-                        Processor.ExecOperation();
-                        Processor.ExecFunction();
-                    }
-
-
-                    if (typeof(T).Name == "TPNumber")
-                    {
-                        if (!floatMode)
-                            Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr);
-                        //Processor.Lop_Res.Num = checked((long)Processor.Lop_Res.Num);
-                    }
-
-
+                    Processor.Exec();
                     Editor.Str = Processor.Lop_Res.ValueStr;
                     State = States.l_val;
                     return Editor.Str;
                 }
                 catch (Exception e)
                 {
-                    Editor.Str = PEditor.Zero;
-                    Processor.Clear();
-                    State = States.l_val;
+                    ClearAll();
                     return e.Message;
                 }
             }
@@ -332,13 +249,21 @@ namespace PO2
             // Ввод оператора
             if (26 <= i && i <= 29)
             {
+                char ch = ConvertToOperator(i);
                 if (State == States.l_val || State == States.op)
-                {
-                    char ch = ConvertToOperator(i);
+                {                  
                     Editor.AddSign(ch);
                     Processor.Operation = (TProc<T>.Operations)ch;
-                    Processor.ResetFunc();
+                    //Processor.ResetFunc();
                     State = States.op;
+                }
+                else
+                {
+                    Processor.Exec();
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.AddSign(ch);
+                    State = States.op;
+                    Processor.Operation = (TProc<T>.Operations)ch;
                 }
                 return Editor.Str;
             }
@@ -347,26 +272,68 @@ namespace PO2
             // Возведение в квадрат
             if (i == 30)
             {
-                if (State == States.l_val)
+                try
                 {
-                    Processor.Function = TProc<T>.Functions.Sqr;
-                    Processor.ResetOp();
-                    Editor.Add(funcSqr);
-                    State = States.func;
+                    if (State == States.l_val)
+                    {
+                        Processor.Function = TProc<T>.Functions.Sqr;
+                        Processor.Exec();
+                        Editor.Str = Processor.Lop_Res.ValueStr;
+                    }
+                    else if (State == States.r_val)
+                    {
+                        var oldOperation = Processor.Operation;
+                        Processor.Function = TProc<T>.Functions.Sqr;
+                        T temp = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = (T)Processor.Rop.Clone();
+                        Processor.ExecFunction();
+                        Editor.PopLastNumber();
+                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Processor.Rop = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = temp;
+                        Processor.Operation = oldOperation;
+                    }
                 }
+                catch (Exception e)
+                {
+                    ClearAll();
+                    return e.Message;
+                }
+
                 return Editor.Str;
             }
 
             // Инверсия числа
             if (i == 31)
             {
-                if (State == States.l_val)
+                try
                 {
-                    Processor.Function = TProc<T>.Functions.Inv;
-                    Processor.ResetOp(); // Сделать, чтобы установление режима функции автоматически убирало режим операции
-                    Editor.Add(funcInv);
-                    State = States.func;
+                    if (State == States.l_val)
+                    {
+                        Processor.Function = TProc<T>.Functions.Inv;
+                        Processor.Exec();
+                        Editor.Str = Processor.Lop_Res.ValueStr;
+                    }
+                    else if (State == States.r_val)
+                    {
+                        var oldOperation = Processor.Operation;
+                        Processor.Function = TProc<T>.Functions.Inv;
+                        T temp = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = (T)Processor.Rop.Clone();
+                        Processor.ExecFunction();
+                        Editor.PopLastNumber();
+                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Processor.Rop = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = temp;
+                        Processor.Operation = oldOperation;
+                    }
                 }
+                catch (Exception e)
+                {
+                    ClearAll();
+                    return e.Message;
+                }
+
                 return Editor.Str;
             }            
 
