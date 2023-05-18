@@ -8,26 +8,30 @@ namespace PO2
 {
     public class TFrac : TANumber
     {
-        //private int Num, Den; // числитель и знаменатель
 
-        public TPNumber Num { set; get; } = new TPNumber(0, 10, 5);
-        public TPNumber Den { set; get; } = new TPNumber(1, 10, 5);
+        public TPNumber Num { set; get; }
 
-        //public override string ValueStr 
-        //{ 
-        //    set { ValueStr = value; } 
-        //    get {
-        //        return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
-        //            Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
-        //        //return Num.Value.ToString() + "/" + Den.Value.ToString(); 
-        //    } 
-        //}
+        public TPNumber Den { set; get; }
 
         public override string ToString()
         {
             return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
                     Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
         }
+
+        private int p;
+
+        public int P
+        {
+            get { return p; }
+            set
+            {
+                p = value;
+                Num.P = value;
+                Den.P = value;
+            }
+        }
+
 
         public TFrac() { Num = new TPNumber(0, 10, 5); Den = new TPNumber(1, 10, 5); }
 

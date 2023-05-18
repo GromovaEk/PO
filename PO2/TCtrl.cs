@@ -344,37 +344,34 @@ namespace PO2
                 {
                     (Processor as TProc<TPNumber>).Lop_Res.P = P;
                     (Processor as TProc<TPNumber>).Rop.P = P;
-                    Editor.Str = Processor.Lop_Res.ToString();
-                    if (State != States.l_val)
-                    {
-                        Editor.Str += (char)Processor.Operation;
-                        if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ToString();
-                    }
+                    
                     if (Memory.FState)
-                    {
                         (Memory as TMemory<TPNumber>).FNumber.P = P;
-                    }
-                    return Editor.Str;
                 }
                 else if (typeof(T).Name == "TCNumber")
                 {
-
                     (Processor as TProc<TCNumber>).Lop_Res.P = P;
                     (Processor as TProc<TCNumber>).Rop.P = P;
-
-                    Editor.Str = Processor.Lop_Res.ToString();
-                    if (State != States.l_val)
-                    {
-                        Editor.Str += (char)Processor.Operation;
-                        if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ToString();
-                    }
                     if (Memory.FState)
                         (Memory as TMemory<TCNumber>).FNumber.P = P;
-                    return Editor.Str;
+                    
+                }
+                else if (typeof(T).Name == "TFrac")
+                {
+                    (Processor as TProc<TFrac>).Lop_Res.P = P;
+                    (Processor as TProc<TFrac>).Rop.P = P;
+                    if (Memory.FState)
+                        (Memory as TMemory<TFrac>).FNumber.P = P;
                 }
 
+                Editor.Str = Processor.Lop_Res.ToString();
+                if (State != States.l_val)
+                {
+                    Editor.Str += (char)Processor.Operation;
+                    if (State == States.r_val)
+                        Editor.Str += Processor.Rop.ToString();
+                }
+                return Editor.Str;
             }
 
             // Режим целых
