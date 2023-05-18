@@ -61,6 +61,13 @@ namespace PO2
             floatMode = false;
         }
 
+        public void ClearAll()
+        {
+            Editor.Str = PEditor.Zero;
+            Processor.Clear();
+            State = States.l_val;
+        }
+
         public string Command(int i)
         {
             // Ввод цифры
@@ -260,9 +267,7 @@ namespace PO2
                 }
                 catch (Exception e)
                 {
-                    Editor.Str = PEditor.Zero;
-                    Processor.Clear();
-                    State = States.l_val;
+                    ClearAll();
                     return e.Message;
                 }
             }

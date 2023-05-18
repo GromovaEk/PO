@@ -11,16 +11,24 @@ namespace PO2
 		public string Str { get; set; }
 
 		public abstract void Add(string numeral);
+
 		public abstract void Add(char numeral);
+
 		public abstract void AddDigit(int a);
+
 		public abstract void AddZero();
+
 		public abstract void AddSign(char sign);
+
 		public abstract void AddSeparator();
+
 		public abstract void AddMinusFront();
+
 		public abstract void Backspace();
+
 		public abstract void Clear();
+
 		public abstract bool isZero();
 
-		/* expression */
 	}
 }
