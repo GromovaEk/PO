@@ -12,9 +12,15 @@ namespace PO2
         public const string Delim = ",";
 
 
-        public override bool isZero()
+        public override bool IsZero()
         {
             return (Str == Zero || Str == "-" + Zero);
+        }
+
+        protected override bool LastIsSign()
+        {
+            return (Str.Last() == '-' || Str.Last() == '+' || Str.Last() == '*'
+                || Str.Last() == '/');
         }
 
         public override void Add(char ch) 
@@ -57,7 +63,7 @@ namespace PO2
 
         public override void AddDigit(int a) 
         {
-            if (isZero())
+            if (IsZero())
             {
                 if (Str.Length == 1)
                     Str = "";
@@ -73,13 +79,13 @@ namespace PO2
 
         public override void AddZero() 
         {
-            if (!isZero())
+            if (!IsZero())
                 Str += Zero; 
         }
 
         public override void Backspace() 
         {
-            if (!isZero())
+            if (!IsZero())
             {
                 Str = Str.Remove(Str.Length - 1, 1);
                 
@@ -90,12 +96,24 @@ namespace PO2
             }
         }
 
+        public override void Pop()
+        {
+            if (LastIsSign())
+                Backspace();
+            else
+            {
+                while (!LastIsSign())
+                    Backspace();
+            }
+        }
+
         public override void Clear() { Str = Zero;  }
    
 
         public PEditor() { Str = Zero; }
 
         public void Edit() { }
+
 
     }
 }

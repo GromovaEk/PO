@@ -16,9 +16,15 @@ namespace PO2
 
         // состояние тут
 
-        public override bool isZero()
+        public override bool IsZero()
         {
             return (Str == Zero || Str == "-" + Zero);
+        }
+
+        protected override bool LastIsSign()
+        {
+            return (Str.Last() == '-' || Str.Last() == '+' || Str.Last() == '*'
+                || Str.Last() == ':');
         }
 
         public override void Add(char ch)
@@ -67,7 +73,7 @@ namespace PO2
         {
             string s = Converter.longToChar(a).ToString();
             //string s = a.ToString();
-            if (isZero())
+            if (IsZero())
             {
                 if (Str.Length == 3)
                     Str = s + "/1";
@@ -101,13 +107,13 @@ namespace PO2
 
         public override void AddZero()
         {
-            if (!isZero())
+            if (!IsZero())
                 Str += Zero;
         }
 
         public override void Backspace()
         {
-            if (!isZero())
+            if (!IsZero())
             {
                 if(Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
                     Str = Str.Remove(Str.Length - 1, 1);
@@ -140,6 +146,17 @@ namespace PO2
                         Str = Str.Remove(Str.Length - 1, 1);
 
                 }
+            }
+        }
+
+        public override void Pop()
+        {
+            if (LastIsSign())
+                Backspace();
+            else
+            {
+                while (!LastIsSign())
+                    Backspace();
             }
         }
 

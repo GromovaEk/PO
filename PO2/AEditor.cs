@@ -28,7 +28,11 @@ namespace PO2
 
 		public abstract void Clear();
 
-		public abstract bool isZero();
+		public abstract bool IsZero();
+
+		public abstract void Pop();
+
+		protected abstract bool LastIsSign();
 
 	}
 }
