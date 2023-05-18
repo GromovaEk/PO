@@ -339,9 +339,9 @@ namespace PO2
             // Изменение основания системы счисления
             if (32 <= i && i <= 46)
             {
+                P = i - 30;
                 if (typeof(T).Name == "TPNumber")
                 {
-                    P = i - 30;
                     (Processor as TProc<TPNumber>).Lop_Res.P = P;
                     (Processor as TProc<TPNumber>).Rop.P = P;
                     Editor.Str = Processor.Lop_Res.ValueStr;
@@ -357,54 +357,54 @@ namespace PO2
                     }
                     return Editor.Str;
                 }
-                else if (typeof(T).Name == "TFrac")
-                {
-                    P = i - 30;
+                //else if (typeof(T).Name == "TFrac")
+                //{
+                //    P = i - 30;
 
-                    (Processor as TProc<TFrac>).Lop_Res.Num.P = P;
-                    (Processor as TProc<TFrac>).Lop_Res.Den.P = P;
+                //    (Processor as TProc<TFrac>).Lop_Res.Num.P = P;
+                //    (Processor as TProc<TFrac>).Lop_Res.Den.P = P;
 
-                    (Processor as TProc<TFrac>).Rop.Num.P = P;
-                    (Processor as TProc<TFrac>).Rop.Den.P = P;
+                //    (Processor as TProc<TFrac>).Rop.Num.P = P;
+                //    (Processor as TProc<TFrac>).Rop.Den.P = P;
 
-                    Editor.Str = Processor.Lop_Res.ValueStr;
-                    if (State != States.l_val)
-                    {
-                        Editor.Str += (char)Processor.Operation;
-                        if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ValueStr;
-                    }
-                    if (Memory.FState)
-                    {
-                        (Memory as TMemory<TFrac>).FNumber.Num.P = P;
-                        (Memory as TMemory<TFrac>).FNumber.Den.P = P;
-                    }
-                    return Editor.Str;
-                }
-                else if (typeof(T).Name == "TComp")
-                {
-                    P = i - 30;
+                //    Editor.Str = Processor.Lop_Res.ValueStr;
+                //    if (State != States.l_val)
+                //    {
+                //        Editor.Str += (char)Processor.Operation;
+                //        if (State == States.r_val)
+                //            Editor.Str += Processor.Rop.ValueStr;
+                //    }
+                //    if (Memory.FState)
+                //    {
+                //        (Memory as TMemory<TFrac>).FNumber.Num.P = P;
+                //        (Memory as TMemory<TFrac>).FNumber.Den.P = P;
+                //    }
+                //    return Editor.Str;
+                //}
+                //else if (typeof(T).Name == "TComp")
+                //{
+                //    P = i - 30;
 
-                    (Processor as TProc<TComp>).Lop_Res.Re.P = P;
-                    (Processor as TProc<TComp>).Lop_Res.Im.P = P;
+                //    (Processor as TProc<TComp>).Lop_Res.Re.P = P;
+                //    (Processor as TProc<TComp>).Lop_Res.Im.P = P;
 
-                    (Processor as TProc<TComp>).Rop.Re.P = P;
-                    (Processor as TProc<TComp>).Rop.Im.P = P;
+                //    (Processor as TProc<TComp>).Rop.Re.P = P;
+                //    (Processor as TProc<TComp>).Rop.Im.P = P;
 
-                    Editor.Str = Processor.Lop_Res.ValueStr;
-                    if (State != States.l_val)
-                    {
-                        Editor.Str += (char)Processor.Operation;
-                        if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ValueStr;
-                    }
-                    if (Memory.FState)
-                    {
-                        (Memory as TMemory<TComp>).FNumber.Re.P = P;
-                        (Memory as TMemory<TComp>).FNumber.Im.P = P;
-                    }
-                    return Editor.Str;
-                }
+                //    Editor.Str = Processor.Lop_Res.ValueStr;
+                //    if (State != States.l_val)
+                //    {
+                //        Editor.Str += (char)Processor.Operation;
+                //        if (State == States.r_val)
+                //            Editor.Str += Processor.Rop.ValueStr;
+                //    }
+                //    if (Memory.FState)
+                //    {
+                //        (Memory as TMemory<TComp>).FNumber.Re.P = P;
+                //        (Memory as TMemory<TComp>).FNumber.Im.P = P;
+                //    }
+                //    return Editor.Str;
+                //}
 
             }
 
@@ -431,9 +431,9 @@ namespace PO2
             // Изменение точности
             if (49 <= i && i <= 56)
             {
+                Acc = i - 47;
                 if (typeof(T).Name == "TPNumber")
-                {
-                    Acc = i - 47;
+                {                 
                     (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
                     (Processor as TProc<TPNumber>).Rop.Acc = Acc;
                     Editor.Str = Processor.Lop_Res.ValueStr;
