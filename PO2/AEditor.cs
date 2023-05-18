@@ -21,6 +21,6 @@ namespace PO2
 		public abstract void Clear();
 		public abstract bool isZero();
 
-		
+		/* expression */
 	}
 }
