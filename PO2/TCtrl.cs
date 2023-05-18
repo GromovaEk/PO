@@ -261,13 +261,21 @@ namespace PO2
             // Ввод оператора
             if (26 <= i && i <= 29)
             {
+                char ch = ConvertToOperator(i);
                 if (State == States.l_val || State == States.op)
-                {
-                    char ch = ConvertToOperator(i);
+                {                  
                     Editor.AddSign(ch);
                     Processor.Operation = (TProc<T>.Operations)ch;
                     //Processor.ResetFunc();
                     State = States.op;
+                }
+                else
+                {
+                    Processor.Exec();
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.AddSign(ch);
+                    State = States.op;
+                    Processor.Operation = (TProc<T>.Operations)ch;
                 }
                 return Editor.Str;
             }
