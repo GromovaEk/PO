@@ -21,10 +21,15 @@ namespace PO2
             return (Str == Zero || Str == "-" + Zero);
         }
 
-        protected override bool LastIsSign()
+        private bool IsSign(char ch)
         {
-            return (Str.Last() == '-' || Str.Last() == '+' || Str.Last() == '*'
-                || Str.Last() == ':');
+            return (ch == '-' || ch == '+' || ch == '*'
+                || ch == ':');
+        }
+
+        public override bool LastIsSign()
+        {
+            return IsSign(Str.Last());
         }
 
         public override void Add(char ch)
@@ -149,7 +154,7 @@ namespace PO2
             }
         }
 
-        public override void Pop()
+        public override void PopLastNumber()
         {
             if (LastIsSign())
                 Backspace();
@@ -166,5 +171,16 @@ namespace PO2
 
         public void Edit() { }
 
+        public override string GetLastNumber()
+        {
+            int i = Str.Length - 1;
+            StringBuilder sb = new StringBuilder();
+            while (!IsSign(Str[i]))
+            {
+                sb.Append(Str[i]);
+                i--;
+            }
+            return sb.ToString();
+        }
     }
 }

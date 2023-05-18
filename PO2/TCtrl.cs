@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace PO2
 {
     public class TCtrl<T> where T : TANumber, new()
     {
-        public enum States { l_val = 0, op, r_val, func }
+        public enum States { l_val = 0, op, r_val }
         
         public bool floatMode;
 
@@ -156,22 +157,11 @@ namespace PO2
             // Backspace
             if (i == 22)
             {
-                States old_state = State;
-                if (old_state == States.func)
-                {
-                    if (Processor.Function == TProc<T>.Functions.Sqr)
-                        for (int j = 0; j < funcSqr.Length; j++) { Editor.Backspace(); }
-                    else
-                        for (int j = 0; j < funcInv.Length; j++) { Editor.Backspace(); }
-                    State = States.l_val;
-                    Processor.ResetFunc();
-                    return Editor.Str;
-                }
-
+                States oldState = State;
                 Editor.Backspace();
-                if (old_state == States.r_val)
+                if (oldState == States.r_val)
                 {
-                    if (IsOperator(Editor.Str.Last()))
+                    if (Editor.LastIsSign())
                     {
                         State = States.op;
                         Processor.Rop = new T();
@@ -182,20 +172,24 @@ namespace PO2
                             (Processor as TProc<TPNumber>).Rop.P = P;
                         }
                     }
+                    else
+                        Processor.Rop.SetNumStr(Editor.GetLastNumber()); 
                 }
-                else if (old_state == States.op)
-                    Processor.ResetOp();
+                else if (oldState == States.op)
+                    Processor.Reset();
                 else
                 {
-                    Processor.Clear();
+                    //Processor.Clear();
 
-                    if (typeof(T).Name == "TPNumber")
-                    {
-                        (Processor as TProc<TPNumber>).Lop_Res.P = P;
-                        (Processor as TProc<TPNumber>).Rop.P = P;
-                        (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
-                        (Processor as TProc<TPNumber>).Rop.Acc = Acc;
-                    }
+                    Processor.Lop_Res.SetNumStr(Editor.Str);
+
+                    //if (typeof(T).Name == "TPNumber")
+                    //{
+                    //    (Processor as TProc<TPNumber>).Lop_Res.P = P;
+                    //    (Processor as TProc<TPNumber>).Rop.P = P;
+                    //    (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
+                    //    (Processor as TProc<TPNumber>).Rop.Acc = Acc;
+                    //}
                 }
 
 
@@ -205,7 +199,7 @@ namespace PO2
             // Смена знака
             if (i == 23)
             {
-                if(!Editor.isZero())
+                if(!Editor.IsZero())
                 {
                     if (Processor.Lop_Res.ValueStr.First() != '-')
                         Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ValueStr);
@@ -235,32 +229,23 @@ namespace PO2
             {
                 try
                 {
-                    if (State == States.op)
-                    {
-                        Processor.Rop = Processor.Lop_Res;
-                        Processor.ExecOperation();
-                        Processor.ResetFunc();
-                    }
-                    else if (State == States.func)
-                    {
-                        Processor.ExecFunction();
-                        Processor.ResetOp();                    
-                    }
-                    else
-                    {
-                        Processor.ExecOperation();
-                        Processor.ExecFunction();
-                    }
+                    //if (State == States.op)
+                    //{
+                    //    Processor.Rop = Processor.Lop_Res;
+                    //    Processor.Exec();
+                    //}
+                    //else
+                    //    Processor.Exec();
 
 
-                    if (typeof(T).Name == "TPNumber")
-                    {
-                        if (!floatMode)
-                            Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr);
-                        //Processor.Lop_Res.Num = checked((long)Processor.Lop_Res.Num);
-                    }
+                    //if (typeof(T).Name == "TPNumber")
+                    //{
+                    //    if (!floatMode)
+                    //        Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr);
+                    //    //Processor.Lop_Res.Num = checked((long)Processor.Lop_Res.Num);
+                    //}
 
-
+                    Processor.Exec();
                     Editor.Str = Processor.Lop_Res.ValueStr;
                     State = States.l_val;
                     return Editor.Str;
@@ -281,7 +266,7 @@ namespace PO2
                     char ch = ConvertToOperator(i);
                     Editor.AddSign(ch);
                     Processor.Operation = (TProc<T>.Operations)ch;
-                    Processor.ResetFunc();
+                    //Processor.ResetFunc();
                     State = States.op;
                 }
                 return Editor.Str;
@@ -291,26 +276,68 @@ namespace PO2
             // Возведение в квадрат
             if (i == 30)
             {
-                if (State == States.l_val)
+                try
                 {
-                    Processor.Function = TProc<T>.Functions.Sqr;
-                    Processor.ResetOp();
-                    Editor.Add(funcSqr);
-                    State = States.func;
+                    if (State == States.l_val)
+                    {
+                        Processor.Function = TProc<T>.Functions.Sqr;
+                        Processor.Exec();
+                        Editor.Str = Processor.Lop_Res.ValueStr;
+                    }
+                    else if (State == States.r_val)
+                    {
+                        var oldOperation = Processor.Operation;
+                        Processor.Function = TProc<T>.Functions.Sqr;
+                        T temp = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = (T)Processor.Rop.Clone();
+                        Processor.ExecFunction();
+                        Editor.PopLastNumber();
+                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Processor.Rop = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = temp;
+                        Processor.Operation = oldOperation;
+                    }
                 }
+                catch (Exception e)
+                {
+                    ClearAll();
+                    return e.Message;
+                }
+
                 return Editor.Str;
             }
 
             // Инверсия числа
             if (i == 31)
             {
-                if (State == States.l_val)
+                try
                 {
-                    Processor.Function = TProc<T>.Functions.Inv;
-                    Processor.ResetOp(); // Сделать, чтобы установление режима функции автоматически убирало режим операции
-                    Editor.Add(funcInv);
-                    State = States.func;
+                    if (State == States.l_val)
+                    {
+                        Processor.Function = TProc<T>.Functions.Inv;
+                        Processor.Exec();
+                        Editor.Str = Processor.Lop_Res.ValueStr;
+                    }
+                    else if (State == States.r_val)
+                    {
+                        var oldOperation = Processor.Operation;
+                        Processor.Function = TProc<T>.Functions.Inv;
+                        T temp = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = (T)Processor.Rop.Clone();
+                        Processor.ExecFunction();
+                        Editor.PopLastNumber();
+                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Processor.Rop = (T)Processor.Lop_Res.Clone();
+                        Processor.Lop_Res = temp;
+                        Processor.Operation = oldOperation;
+                    }
                 }
+                catch (Exception e)
+                {
+                    ClearAll();
+                    return e.Message;
+                }
+
                 return Editor.Str;
             }            
 

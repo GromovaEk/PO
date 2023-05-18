@@ -103,10 +103,10 @@ namespace PO2
 
         public void Exec()
         {
-            if (Function == Functions.None)
-                ExecOperation();
-            else
+            if (Function != Functions.None)
                 ExecFunction();
+            else if (Operation != Operations.None)
+                ExecOperation();
         }
 
         public T Lop_Res { get; set; }

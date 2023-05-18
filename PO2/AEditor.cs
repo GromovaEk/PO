@@ -30,9 +30,12 @@ namespace PO2
 
 		public abstract bool IsZero();
 
-		public abstract void Pop();
+		public abstract void PopLastNumber();
 
-		protected abstract bool LastIsSign();
+		public abstract string GetLastNumber();
+
+		public abstract bool LastIsSign();
+
 
 	}
 }
