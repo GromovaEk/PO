@@ -52,7 +52,7 @@ namespace PO2
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.buttonMul = new System.Windows.Forms.Button();
-            this.button = new System.Windows.Forms.Button();
+            this.buttonInv = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -79,10 +79,9 @@ namespace PO2
             // 
             // buttonMC
             // 
-            this.buttonMC.Location = new System.Drawing.Point(16, 209);
-            this.buttonMC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMC.Location = new System.Drawing.Point(12, 170);
             this.buttonMC.Name = "buttonMC";
-            this.buttonMC.Size = new System.Drawing.Size(75, 58);
+            this.buttonMC.Size = new System.Drawing.Size(56, 47);
             this.buttonMC.TabIndex = 2;
             this.buttonMC.TabStop = false;
             this.buttonMC.Text = "MC";
@@ -91,10 +90,9 @@ namespace PO2
             // 
             // buttonMR
             // 
-            this.buttonMR.Location = new System.Drawing.Point(16, 274);
-            this.buttonMR.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMR.Location = new System.Drawing.Point(12, 223);
             this.buttonMR.Name = "buttonMR";
-            this.buttonMR.Size = new System.Drawing.Size(75, 58);
+            this.buttonMR.Size = new System.Drawing.Size(56, 47);
             this.buttonMR.TabIndex = 2;
             this.buttonMR.TabStop = false;
             this.buttonMR.Text = "MR";
@@ -103,10 +101,9 @@ namespace PO2
             // 
             // buttonMS
             // 
-            this.buttonMS.Location = new System.Drawing.Point(16, 340);
-            this.buttonMS.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMS.Location = new System.Drawing.Point(12, 276);
             this.buttonMS.Name = "buttonMS";
-            this.buttonMS.Size = new System.Drawing.Size(75, 58);
+            this.buttonMS.Size = new System.Drawing.Size(56, 47);
             this.buttonMS.TabIndex = 2;
             this.buttonMS.TabStop = false;
             this.buttonMS.Text = "MS";
@@ -115,10 +112,9 @@ namespace PO2
             // 
             // buttonMpl
             // 
-            this.buttonMpl.Location = new System.Drawing.Point(16, 405);
-            this.buttonMpl.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMpl.Location = new System.Drawing.Point(12, 329);
             this.buttonMpl.Name = "buttonMpl";
-            this.buttonMpl.Size = new System.Drawing.Size(75, 58);
+            this.buttonMpl.Size = new System.Drawing.Size(56, 47);
             this.buttonMpl.TabIndex = 2;
             this.buttonMpl.TabStop = false;
             this.buttonMpl.Text = "M+";
@@ -128,10 +124,9 @@ namespace PO2
             // button10
             // 
             this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(16, 470);
-            this.button10.Margin = new System.Windows.Forms.Padding(4);
+            this.button10.Location = new System.Drawing.Point(12, 382);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 58);
+            this.button10.Size = new System.Drawing.Size(56, 47);
             this.button10.TabIndex = 2;
             this.button10.TabStop = false;
             this.button10.Text = "A";
@@ -141,10 +136,9 @@ namespace PO2
             // button11
             // 
             this.button11.Enabled = false;
-            this.button11.Location = new System.Drawing.Point(100, 470);
-            this.button11.Margin = new System.Windows.Forms.Padding(4);
+            this.button11.Location = new System.Drawing.Point(75, 382);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 58);
+            this.button11.Size = new System.Drawing.Size(56, 47);
             this.button11.TabIndex = 2;
             this.button11.TabStop = false;
             this.button11.Text = "B";
@@ -154,10 +148,9 @@ namespace PO2
             // button12
             // 
             this.button12.Enabled = false;
-            this.button12.Location = new System.Drawing.Point(181, 470);
-            this.button12.Margin = new System.Windows.Forms.Padding(4);
+            this.button12.Location = new System.Drawing.Point(136, 382);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 58);
+            this.button12.Size = new System.Drawing.Size(56, 47);
             this.button12.TabIndex = 2;
             this.button12.TabStop = false;
             this.button12.Text = "C";
@@ -167,10 +160,9 @@ namespace PO2
             // button13
             // 
             this.button13.Enabled = false;
-            this.button13.Location = new System.Drawing.Point(264, 470);
-            this.button13.Margin = new System.Windows.Forms.Padding(4);
+            this.button13.Location = new System.Drawing.Point(198, 382);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 58);
+            this.button13.Size = new System.Drawing.Size(56, 47);
             this.button13.TabIndex = 2;
             this.button13.TabStop = false;
             this.button13.Text = "D";
@@ -180,10 +172,9 @@ namespace PO2
             // button14
             // 
             this.button14.Enabled = false;
-            this.button14.Location = new System.Drawing.Point(347, 470);
-            this.button14.Margin = new System.Windows.Forms.Padding(4);
+            this.button14.Location = new System.Drawing.Point(260, 382);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(75, 58);
+            this.button14.Size = new System.Drawing.Size(56, 47);
             this.button14.TabIndex = 2;
             this.button14.TabStop = false;
             this.button14.Text = "E";
@@ -193,10 +184,9 @@ namespace PO2
             // button15
             // 
             this.button15.Enabled = false;
-            this.button15.Location = new System.Drawing.Point(429, 470);
-            this.button15.Margin = new System.Windows.Forms.Padding(4);
+            this.button15.Location = new System.Drawing.Point(322, 382);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(75, 58);
+            this.button15.Size = new System.Drawing.Size(56, 47);
             this.button15.TabIndex = 2;
             this.button15.TabStop = false;
             this.button15.Text = "F";
@@ -205,10 +195,9 @@ namespace PO2
             // 
             // button0
             // 
-            this.button0.Location = new System.Drawing.Point(99, 405);
-            this.button0.Margin = new System.Windows.Forms.Padding(4);
+            this.button0.Location = new System.Drawing.Point(74, 329);
             this.button0.Name = "button0";
-            this.button0.Size = new System.Drawing.Size(75, 58);
+            this.button0.Size = new System.Drawing.Size(56, 47);
             this.button0.TabIndex = 2;
             this.button0.TabStop = false;
             this.button0.Text = "0";
@@ -217,10 +206,9 @@ namespace PO2
             // 
             // buttonReverse
             // 
-            this.buttonReverse.Location = new System.Drawing.Point(181, 405);
-            this.buttonReverse.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonReverse.Location = new System.Drawing.Point(136, 329);
             this.buttonReverse.Name = "buttonReverse";
-            this.buttonReverse.Size = new System.Drawing.Size(75, 58);
+            this.buttonReverse.Size = new System.Drawing.Size(56, 47);
             this.buttonReverse.TabIndex = 2;
             this.buttonReverse.TabStop = false;
             this.buttonReverse.Text = "+/-";
@@ -231,10 +219,9 @@ namespace PO2
             // 
             this.buttonComma.Enabled = false;
             this.buttonComma.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonComma.Location = new System.Drawing.Point(264, 405);
-            this.buttonComma.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonComma.Location = new System.Drawing.Point(198, 329);
             this.buttonComma.Name = "buttonComma";
-            this.buttonComma.Size = new System.Drawing.Size(75, 58);
+            this.buttonComma.Size = new System.Drawing.Size(56, 47);
             this.buttonComma.TabIndex = 2;
             this.buttonComma.TabStop = false;
             this.buttonComma.Text = ",";
@@ -245,10 +232,9 @@ namespace PO2
             // 
             this.buttonPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonPlus.ForeColor = System.Drawing.Color.Coral;
-            this.buttonPlus.Location = new System.Drawing.Point(347, 405);
-            this.buttonPlus.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonPlus.Location = new System.Drawing.Point(260, 329);
             this.buttonPlus.Name = "buttonPlus";
-            this.buttonPlus.Size = new System.Drawing.Size(75, 58);
+            this.buttonPlus.Size = new System.Drawing.Size(56, 47);
             this.buttonPlus.TabIndex = 2;
             this.buttonPlus.TabStop = false;
             this.buttonPlus.Text = "+";
@@ -259,10 +245,9 @@ namespace PO2
             // 
             this.buttonEq.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonEq.ForeColor = System.Drawing.Color.Coral;
-            this.buttonEq.Location = new System.Drawing.Point(429, 405);
-            this.buttonEq.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonEq.Location = new System.Drawing.Point(322, 329);
             this.buttonEq.Name = "buttonEq";
-            this.buttonEq.Size = new System.Drawing.Size(75, 58);
+            this.buttonEq.Size = new System.Drawing.Size(56, 47);
             this.buttonEq.TabIndex = 2;
             this.buttonEq.TabStop = false;
             this.buttonEq.Text = "=";
@@ -271,10 +256,9 @@ namespace PO2
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(99, 340);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(74, 276);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 58);
+            this.button1.Size = new System.Drawing.Size(56, 47);
             this.button1.TabIndex = 2;
             this.button1.TabStop = false;
             this.button1.Text = "1";
@@ -283,10 +267,9 @@ namespace PO2
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(181, 340);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(136, 276);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 58);
+            this.button2.Size = new System.Drawing.Size(56, 47);
             this.button2.TabIndex = 2;
             this.button2.TabStop = false;
             this.button2.Text = "2";
@@ -295,10 +278,9 @@ namespace PO2
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(264, 340);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(198, 276);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 58);
+            this.button3.Size = new System.Drawing.Size(56, 47);
             this.button3.TabIndex = 2;
             this.button3.TabStop = false;
             this.button3.Text = "3";
@@ -309,10 +291,9 @@ namespace PO2
             // 
             this.buttonMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMin.ForeColor = System.Drawing.Color.Coral;
-            this.buttonMin.Location = new System.Drawing.Point(347, 340);
-            this.buttonMin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMin.Location = new System.Drawing.Point(260, 276);
             this.buttonMin.Name = "buttonMin";
-            this.buttonMin.Size = new System.Drawing.Size(75, 58);
+            this.buttonMin.Size = new System.Drawing.Size(56, 47);
             this.buttonMin.TabIndex = 2;
             this.buttonMin.TabStop = false;
             this.buttonMin.Text = "-";
@@ -321,10 +302,9 @@ namespace PO2
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(99, 274);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Location = new System.Drawing.Point(74, 223);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 58);
+            this.button4.Size = new System.Drawing.Size(56, 47);
             this.button4.TabIndex = 2;
             this.button4.TabStop = false;
             this.button4.Text = "4";
@@ -333,10 +313,9 @@ namespace PO2
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(181, 274);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Location = new System.Drawing.Point(136, 223);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 58);
+            this.button5.Size = new System.Drawing.Size(56, 47);
             this.button5.TabIndex = 2;
             this.button5.TabStop = false;
             this.button5.Text = "5";
@@ -345,10 +324,9 @@ namespace PO2
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(264, 274);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Location = new System.Drawing.Point(198, 223);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 58);
+            this.button6.Size = new System.Drawing.Size(56, 47);
             this.button6.TabIndex = 2;
             this.button6.TabStop = false;
             this.button6.Text = "6";
@@ -359,34 +337,31 @@ namespace PO2
             // 
             this.buttonMul.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMul.ForeColor = System.Drawing.Color.Coral;
-            this.buttonMul.Location = new System.Drawing.Point(347, 274);
-            this.buttonMul.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMul.Location = new System.Drawing.Point(260, 223);
             this.buttonMul.Name = "buttonMul";
-            this.buttonMul.Size = new System.Drawing.Size(75, 58);
+            this.buttonMul.Size = new System.Drawing.Size(56, 47);
             this.buttonMul.TabIndex = 2;
             this.buttonMul.TabStop = false;
             this.buttonMul.Text = "*";
             this.buttonMul.UseVisualStyleBackColor = true;
             this.buttonMul.Click += new System.EventHandler(this.buttonMul_Click);
             // 
-            // button
+            // buttonInv
             // 
-            this.button.Location = new System.Drawing.Point(429, 274);
-            this.button.Margin = new System.Windows.Forms.Padding(4);
-            this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(75, 58);
-            this.button.TabIndex = 2;
-            this.button.TabStop = false;
-            this.button.Text = "1/x";
-            this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.buttonInverse_Click);
+            this.buttonInv.Location = new System.Drawing.Point(322, 223);
+            this.buttonInv.Name = "buttonInv";
+            this.buttonInv.Size = new System.Drawing.Size(56, 47);
+            this.buttonInv.TabIndex = 2;
+            this.buttonInv.TabStop = false;
+            this.buttonInv.Text = "1/x";
+            this.buttonInv.UseVisualStyleBackColor = true;
+            this.buttonInv.Click += new System.EventHandler(this.buttonInverse_Click);
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(99, 209);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Location = new System.Drawing.Point(74, 170);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 59);
+            this.button7.Size = new System.Drawing.Size(56, 48);
             this.button7.TabIndex = 2;
             this.button7.TabStop = false;
             this.button7.Text = "7";
@@ -395,10 +370,9 @@ namespace PO2
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(181, 209);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
+            this.button8.Location = new System.Drawing.Point(136, 170);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 58);
+            this.button8.Size = new System.Drawing.Size(56, 47);
             this.button8.TabIndex = 2;
             this.button8.TabStop = false;
             this.button8.Text = "8";
@@ -407,10 +381,9 @@ namespace PO2
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(264, 209);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
+            this.button9.Location = new System.Drawing.Point(198, 170);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 58);
+            this.button9.Size = new System.Drawing.Size(56, 47);
             this.button9.TabIndex = 2;
             this.button9.TabStop = false;
             this.button9.Text = "9";
@@ -421,10 +394,9 @@ namespace PO2
             // 
             this.buttonDelim.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonDelim.ForeColor = System.Drawing.Color.Coral;
-            this.buttonDelim.Location = new System.Drawing.Point(347, 209);
-            this.buttonDelim.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDelim.Location = new System.Drawing.Point(260, 170);
             this.buttonDelim.Name = "buttonDelim";
-            this.buttonDelim.Size = new System.Drawing.Size(75, 58);
+            this.buttonDelim.Size = new System.Drawing.Size(56, 47);
             this.buttonDelim.TabIndex = 2;
             this.buttonDelim.TabStop = false;
             this.buttonDelim.Text = ":";
@@ -433,10 +405,9 @@ namespace PO2
             // 
             // buttonSqr
             // 
-            this.buttonSqr.Location = new System.Drawing.Point(429, 209);
-            this.buttonSqr.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSqr.Location = new System.Drawing.Point(322, 170);
             this.buttonSqr.Name = "buttonSqr";
-            this.buttonSqr.Size = new System.Drawing.Size(75, 58);
+            this.buttonSqr.Size = new System.Drawing.Size(56, 47);
             this.buttonSqr.TabIndex = 2;
             this.buttonSqr.TabStop = false;
             this.buttonSqr.Text = "sqr";
@@ -445,10 +416,9 @@ namespace PO2
             // 
             // buttonCE
             // 
-            this.buttonCE.Location = new System.Drawing.Point(105, 144);
-            this.buttonCE.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonCE.Location = new System.Drawing.Point(79, 117);
             this.buttonCE.Name = "buttonCE";
-            this.buttonCE.Size = new System.Drawing.Size(151, 58);
+            this.buttonCE.Size = new System.Drawing.Size(113, 47);
             this.buttonCE.TabIndex = 2;
             this.buttonCE.TabStop = false;
             this.buttonCE.Text = "CE";
@@ -457,10 +427,9 @@ namespace PO2
             // 
             // buttonC
             // 
-            this.buttonC.Location = new System.Drawing.Point(264, 144);
-            this.buttonC.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonC.Location = new System.Drawing.Point(198, 117);
             this.buttonC.Name = "buttonC";
-            this.buttonC.Size = new System.Drawing.Size(240, 58);
+            this.buttonC.Size = new System.Drawing.Size(180, 47);
             this.buttonC.TabIndex = 2;
             this.buttonC.TabStop = false;
             this.buttonC.Text = "C";
@@ -470,7 +439,7 @@ namespace PO2
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
             this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 
@@ -482,8 +451,8 @@ namespace PO2
             this.режимКалькулятораToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(523, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(392, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -494,27 +463,27 @@ namespace PO2
             this.простаяДробьToolStripMenuItem,
             this.комплексноеЧислоToolStripMenuItem});
             this.режимКалькулятораToolStripMenuItem.Name = "режимКалькулятораToolStripMenuItem";
-            this.режимКалькулятораToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.режимКалькулятораToolStripMenuItem.Size = new System.Drawing.Size(135, 20);
             this.режимКалькулятораToolStripMenuItem.Text = "Режим калькулятора";
             // 
             // pичноеЧислоToolStripMenuItem
             // 
             this.pичноеЧислоToolStripMenuItem.Name = "pичноеЧислоToolStripMenuItem";
-            this.pичноеЧислоToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.pичноеЧислоToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.pичноеЧислоToolStripMenuItem.Text = "P-ичное число";
             this.pичноеЧислоToolStripMenuItem.Click += new System.EventHandler(this.pичноеЧислоToolStripMenuItem_Click);
             // 
             // простаяДробьToolStripMenuItem
             // 
             this.простаяДробьToolStripMenuItem.Name = "простаяДробьToolStripMenuItem";
-            this.простаяДробьToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.простаяДробьToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.простаяДробьToolStripMenuItem.Text = "Простая дробь";
             this.простаяДробьToolStripMenuItem.Click += new System.EventHandler(this.простаяДробьToolStripMenuItem_Click);
             // 
             // комплексноеЧислоToolStripMenuItem
             // 
             this.комплексноеЧислоToolStripMenuItem.Name = "комплексноеЧислоToolStripMenuItem";
-            this.комплексноеЧислоToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.комплексноеЧислоToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.комплексноеЧислоToolStripMenuItem.Text = "Комплексное число";
             this.комплексноеЧислоToolStripMenuItem.Click += new System.EventHandler(this.комплексноеЧислоToolStripMenuItem_Click);
             // 
@@ -535,11 +504,10 @@ namespace PO2
             this.domainUpDown1.Items.Add("14");
             this.domainUpDown1.Items.Add("15");
             this.domainUpDown1.Items.Add("16");
-            this.domainUpDown1.Location = new System.Drawing.Point(99, 545);
-            this.domainUpDown1.Margin = new System.Windows.Forms.Padding(4);
+            this.domainUpDown1.Location = new System.Drawing.Point(74, 443);
             this.domainUpDown1.Name = "domainUpDown1";
             this.domainUpDown1.ReadOnly = true;
-            this.domainUpDown1.Size = new System.Drawing.Size(71, 22);
+            this.domainUpDown1.Size = new System.Drawing.Size(53, 20);
             this.domainUpDown1.TabIndex = 3;
             this.domainUpDown1.TabStop = false;
             this.domainUpDown1.Text = "10";
@@ -548,10 +516,9 @@ namespace PO2
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 546);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(8, 444);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 17);
+            this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Основание";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -559,10 +526,9 @@ namespace PO2
             // MemoryValue
             // 
             this.MemoryValue.Enabled = false;
-            this.MemoryValue.Location = new System.Drawing.Point(17, 144);
-            this.MemoryValue.Margin = new System.Windows.Forms.Padding(4);
+            this.MemoryValue.Location = new System.Drawing.Point(13, 117);
             this.MemoryValue.Name = "MemoryValue";
-            this.MemoryValue.Size = new System.Drawing.Size(73, 58);
+            this.MemoryValue.Size = new System.Drawing.Size(55, 47);
             this.MemoryValue.TabIndex = 2;
             this.MemoryValue.Text = "0";
             this.MemoryValue.UseVisualStyleBackColor = true;
@@ -571,19 +537,20 @@ namespace PO2
             // 
             this.richTextBox1.AutoSize = true;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(17, 46);
+            this.richTextBox1.Location = new System.Drawing.Point(13, 37);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(16, 17);
+            this.richTextBox1.Size = new System.Drawing.Size(13, 13);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "0";
             // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(264, 543);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox3.Location = new System.Drawing.Point(198, 441);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(79, 21);
+            this.checkBox3.Size = new System.Drawing.Size(65, 17);
             this.checkBox3.TabIndex = 7;
             this.checkBox3.Text = "Память";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -595,22 +562,22 @@ namespace PO2
             this.checkedListBox1.Items.AddRange(new object[] {
             "Целые",
             "Дробные"});
-            this.checkedListBox1.Location = new System.Drawing.Point(398, 543);
-            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkedListBox1.Location = new System.Drawing.Point(298, 441);
+            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(106, 55);
+            this.checkedListBox1.Size = new System.Drawing.Size(80, 34);
             this.checkedListBox1.TabIndex = 8;
             this.checkedListBox1.UseTabStops = false;
+            this.checkedListBox1.Visible = false;
             this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 580);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(8, 471);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 17);
+            this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 9;
             this.label2.Text = "Точность";
             // 
@@ -624,11 +591,10 @@ namespace PO2
             this.domainUpDown2.Items.Add("7");
             this.domainUpDown2.Items.Add("8");
             this.domainUpDown2.Items.Add("9");
-            this.domainUpDown2.Location = new System.Drawing.Point(99, 578);
-            this.domainUpDown2.Margin = new System.Windows.Forms.Padding(4);
+            this.domainUpDown2.Location = new System.Drawing.Point(74, 470);
             this.domainUpDown2.Name = "domainUpDown2";
             this.domainUpDown2.ReadOnly = true;
-            this.domainUpDown2.Size = new System.Drawing.Size(71, 22);
+            this.domainUpDown2.Size = new System.Drawing.Size(53, 20);
             this.domainUpDown2.TabIndex = 10;
             this.domainUpDown2.TabStop = false;
             this.domainUpDown2.Text = "5";
@@ -636,9 +602,9 @@ namespace PO2
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 614);
+            this.ClientSize = new System.Drawing.Size(392, 499);
             this.Controls.Add(this.domainUpDown2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkedListBox1);
@@ -651,7 +617,7 @@ namespace PO2
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.buttonSqr);
-            this.Controls.Add(this.button);
+            this.Controls.Add(this.buttonInv);
             this.Controls.Add(this.buttonEq);
             this.Controls.Add(this.buttonDelim);
             this.Controls.Add(this.buttonMul);
@@ -681,7 +647,6 @@ namespace PO2
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Калькулятор";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -717,7 +682,7 @@ namespace PO2
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button buttonMul;
-        private System.Windows.Forms.Button button;
+        private System.Windows.Forms.Button buttonInv;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;

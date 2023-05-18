@@ -37,7 +37,7 @@ namespace PO2
             Buttons[14] = button14;
             Buttons[15] = button15;
 
-            checkedListBox1.SetItemChecked(0, true);
+            checkedListBox1.SetItemChecked(1, true);
         }
 
         private TCtrl<TPNumber> CtrlTPN;
@@ -815,12 +815,14 @@ namespace PO2
                 {
                     checkedListBox1.SetItemChecked(0, false);
                     buttonComma.Enabled = true;
+                    buttonInv.Enabled = true;
                     richTextBox1.Text = CtrlTPN.Command(48);
                 }
                 else
                 {
                     checkedListBox1.SetItemChecked(1, false);
                     buttonComma.Enabled = false;
+                    buttonInv.Enabled = false;
                     richTextBox1.Text = CtrlTPN.Command(47);
                 }
             }
