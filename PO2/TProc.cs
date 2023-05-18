@@ -11,8 +11,30 @@ namespace PO2
         public enum Operations { None = '\0', Add = '+', Sub = '-', Mul = '*', Dvd = ':' }
 
         public enum Functions { None = 0, Inv, Sqr }
-        public Operations Operation { get;  set; }
-        public Functions Function { get;  set; }
+
+        private Operations operation;
+
+        public Operations Operation 
+        { 
+            get { return operation; }
+            set
+            {
+                operation = value;
+                function = Functions.None;
+            }
+        }
+
+        private Functions function;
+
+        public Functions Function 
+        { 
+            get { return function;  }  
+            set
+            {
+                function = value;
+                operation = Operations.None;
+            }
+        }
 
         public TProc()
         {
@@ -23,8 +45,10 @@ namespace PO2
         {
             Lop_Res = new T();
             Rop = new T();
-            ResetFunc();
-            ResetOp();
+            operation = Operations.None;
+            function = Functions.None;
+            //ResetFunc();
+            //ResetOp();
         }
 
         public void ResetOp()
@@ -75,6 +99,14 @@ namespace PO2
                     Lop_Res = (T)(Lop_Res.Sqare());
                     break;
             }
+        }
+
+        public void Exec()
+        {
+            if (Function == Functions.None)
+                ExecOperation();
+            else
+                ExecFunction();
         }
 
         public T Lop_Res { get; set; }
