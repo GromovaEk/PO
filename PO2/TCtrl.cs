@@ -139,7 +139,7 @@ namespace PO2
                     }
                     else if (State == States.op)
                     {
-                        Editor.Str += Memory.FNumber.ValueStr;
+                        Editor.Str += Memory.FNumber.ToString();
                         Processor.Rop = (T)Memory.FNumber.Clone();
                         State = States.r_val;
                     }                 
@@ -198,10 +198,10 @@ namespace PO2
             {
                 if(!Editor.IsZero())
                 {
-                    if (Processor.Lop_Res.ValueStr.First() != '-')
-                        Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ValueStr);
+                    if (Processor.Lop_Res.ToString().First() != '-')
+                        Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ToString());
                     else
-                        Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr.Substring(1));
+                        Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ToString().Substring(1));
                     Editor.AddMinusFront();
                 }
 
@@ -233,7 +233,7 @@ namespace PO2
                 try
                 {
                     Processor.Exec();
-                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.Str = Processor.Lop_Res.ToString();
                     State = States.l_val;
                     return Editor.Str;
                 }
@@ -259,7 +259,7 @@ namespace PO2
                 else
                 {
                     Processor.Exec();
-                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.Str = Processor.Lop_Res.ToString();
                     Editor.AddSign(ch);
                     State = States.op;
                     Processor.Operation = (TProc<T>.Operations)ch;
@@ -277,7 +277,7 @@ namespace PO2
                     {
                         Processor.Function = TProc<T>.Functions.Sqr;
                         Processor.Exec();
-                        Editor.Str = Processor.Lop_Res.ValueStr;
+                        Editor.Str = Processor.Lop_Res.ToString();
                     }
                     else if (State == States.r_val)
                     {
@@ -287,7 +287,7 @@ namespace PO2
                         Processor.Lop_Res = (T)Processor.Rop.Clone();
                         Processor.ExecFunction();
                         Editor.PopLastNumber();
-                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Editor.Str += Processor.Lop_Res.ToString();
                         Processor.Rop = (T)Processor.Lop_Res.Clone();
                         Processor.Lop_Res = temp;
                         Processor.Operation = oldOperation;
@@ -311,8 +311,8 @@ namespace PO2
                     {
                         Processor.Function = TProc<T>.Functions.Inv;
                         Processor.Exec();
-                        Editor.Str = Processor.Lop_Res.ValueStr;
-                    }
+                        Editor.Str = Processor.Lop_Res.ToString();
+                    }   
                     else if (State == States.r_val)
                     {
                         var oldOperation = Processor.Operation;
@@ -321,7 +321,7 @@ namespace PO2
                         Processor.Lop_Res = (T)Processor.Rop.Clone();
                         Processor.ExecFunction();
                         Editor.PopLastNumber();
-                        Editor.Str += Processor.Lop_Res.ValueStr;
+                        Editor.Str += Processor.Lop_Res.ToString();
                         Processor.Rop = (T)Processor.Lop_Res.Clone();
                         Processor.Lop_Res = temp;
                         Processor.Operation = oldOperation;
@@ -344,12 +344,12 @@ namespace PO2
                 {
                     (Processor as TProc<TPNumber>).Lop_Res.P = P;
                     (Processor as TProc<TPNumber>).Rop.P = P;
-                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.Str = Processor.Lop_Res.ToString();
                     if (State != States.l_val)
                     {
                         Editor.Str += (char)Processor.Operation;
                         if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ValueStr;
+                            Editor.Str += Processor.Rop.ToString();
                     }
                     if (Memory.FState)
                     {
@@ -415,7 +415,7 @@ namespace PO2
                 if (State == States.l_val)
                 {
                     //Processor.Lop_Res.Num = (int)Processor.Lop_Res.Num;
-                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.Str = Processor.Lop_Res.ToString();
                 }                
                 return Editor.Str;
                 
@@ -436,12 +436,12 @@ namespace PO2
                 {                 
                     (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
                     (Processor as TProc<TPNumber>).Rop.Acc = Acc;
-                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    Editor.Str = Processor.Lop_Res.ToString();
                     if (State != States.l_val)
                     {
                         Editor.Str += (char)Processor.Operation;
                         if (State == States.r_val)
-                            Editor.Str += Processor.Rop.ValueStr;
+                            Editor.Str += Processor.Rop.ToString();
                     }
                     if (Memory.FState)
                     {

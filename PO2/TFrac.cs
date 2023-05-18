@@ -13,15 +13,22 @@ namespace PO2
         public TPNumber Num { set; get; } = new TPNumber(0, 10, 5);
         public TPNumber Den { set; get; } = new TPNumber(1, 10, 5);
 
-        public override string ValueStr 
-        { 
-            set { ValueStr = value; } 
-            get {
-                return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
+        //public override string ValueStr 
+        //{ 
+        //    set { ValueStr = value; } 
+        //    get {
+        //        return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
+        //            Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
+        //        //return Num.Value.ToString() + "/" + Den.Value.ToString(); 
+        //    } 
+        //}
+
+        public override string ToString()
+        {
+            return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + "/" +
                     Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
-                //return Num.Value.ToString() + "/" + Den.Value.ToString(); 
-            } 
         }
+
         public TFrac() { Num = new TPNumber(0, 10, 5); Den = new TPNumber(1, 10, 5); }
 
         public TFrac(double n, double dn)
@@ -33,15 +40,15 @@ namespace PO2
         public TFrac(string num_str)
         {
             double n, d;
-            int index = ValueStr.IndexOf("/"); 
+            int index = ToString().IndexOf("/"); 
             string[] f;
 
-            f = ValueStr.Split('/'); 
+            f = ToString().Split('/'); 
             
-            if (ValueStr == "/")
+            if (ToString() == "/")
             {
                 Num = new TPNumber(0); Den = new TPNumber(1);
-                ValueStr = Num.Value.ToString() + "/" + Den.Value.ToString();
+                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
             }
             else if (f.Length == 1)
             {
@@ -50,13 +57,13 @@ namespace PO2
                     Den = new TPNumber(1);
                 else if (Double.TryParse(f[1], out d)) Den = new TPNumber(d);
                 Reduce();
-                ValueStr = Num.Value.ToString() + "/" + Den.Value.ToString();
+                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
             }
             else
             {
-                Double.TryParse(ValueStr, out n); Num = new TPNumber(n);
+                Double.TryParse(ToString(), out n); Num = new TPNumber(n);
                 Den = new TPNumber(1);
-                ValueStr = Num.Value.ToString() + "/" + Den.Value.ToString();
+                SetNumStr(Num.Value.ToString() + "/" + Den.Value.ToString());
             }
 
         }
@@ -88,22 +95,22 @@ namespace PO2
         // обновить значение строки
         public void UpdateValueStr()
         {
-            ValueStr = Num.ToString() + Delim + Den.ToString();
+            SetNumStr(Num.ToString() + Delim + Den.ToString());
         }
 
 
         //Выделить числитель из строки
         public string Get_num_from_string()
         {
-            int index = ValueStr.IndexOf("/");
-            return ValueStr.Substring(0, index);
+            int index = ToString().IndexOf("/");
+            return ToString().Substring(0, index);
         }
 
         //Выделить знаменатель из строки
         public string Get_den_from_string()
         {
-            int index = ValueStr.IndexOf("/");
-            return ValueStr.Substring(index + 1, ValueStr.Length - index + 1);
+            int index = ToString().IndexOf("/");
+            return ToString().Substring(index + 1, ToString().Length - index + 1);
         }
 
         

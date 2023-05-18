@@ -39,7 +39,7 @@ namespace PO2
         }
 
 
-        public string GetStr() { return fNumber.ValueStr;  }
+        public string GetStr() { return fNumber.ToString();  }
 
         //public double GetNum() { return fNumber.Num; }
 

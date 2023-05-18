@@ -10,11 +10,16 @@ namespace PO2
     public class TPNumber : TANumber
     {
         const char delim = ',';
-        
-        public override string ValueStr
+
+        //public override string ValueStr
+        //{
+        //    get { return Converter.Convert(Value, p, acc, Delim); }
+        //    private set;
+        //}
+
+        public override string ToString()
         {
-            get { return Converter.Convert(Value, p, acc, Delim); }
-            set { ValueStr = value; }
+            return Converter.Convert(Value, p, acc, Delim);
         }
 
         //public override string ValueStr { set; get; }

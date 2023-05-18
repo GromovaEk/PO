@@ -63,7 +63,7 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="TANumber.cs" />
-    <Compile Include="TComp.cs" />
+    <Compile Include="TCNumber.cs" />
     <Compile Include="TCtrl.cs" />
     <Compile Include="TFrac.cs" />
     <Compile Include="TProc.cs" />

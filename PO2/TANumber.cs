@@ -8,9 +8,9 @@ namespace PO2
 {
     public abstract class TANumber : ICloneable
     {
-        public abstract string ValueStr { get; set; }
+        //public abstract string ValueStr { get; set; }
 
-        //public string valuestr;
+        public abstract override string ToString();
 
         public static char Delim { get; set; }
 

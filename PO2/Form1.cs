@@ -17,7 +17,7 @@ namespace PO2
             InitializeComponent();
             CtrlTPN = new TCtrl<TPNumber>();
             CtrlTF = new TCtrl<TFrac>();
-            CtrlTC = new TCtrl<TComp>();
+            CtrlTC = new TCtrl<TCNumber>();
             Buttons = new Button[16];
 
             Buttons[0] = button0;
@@ -42,7 +42,7 @@ namespace PO2
 
         private TCtrl<TPNumber> CtrlTPN;
         private TCtrl<TFrac> CtrlTF;
-        private TCtrl<TComp> CtrlTC;
+        private TCtrl<TCNumber> CtrlTC;
 
         private enum ControlType {
             PController,            
