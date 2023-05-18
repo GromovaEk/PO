@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace PO2
 {
-    class FEditor : AEditor
+    class CEditor : AEditor
     {
-        public const string Zero = "0/1";
-        public const string Delim = "/";
+        public const string Zero = "0+i*0"; //??
+        public const string Delim = "+i*";
 
-        public enum FractionStates { numerator = 0, denominator }
-        FractionStates FractionState { get; set; }
-        
+        public enum ComplexStates { real = 0, imaginary }
+        ComplexStates ComplexState { get; set; }
 
         public override bool isZero()
         {
-            return (Str == Zero || Str == "-" + Zero);
+            return (Str == Zero || Str == "-" + Zero); //????
         }
 
         public override void Add(char ch)
@@ -32,12 +31,13 @@ namespace PO2
 
         public override void AddSeparator()
         {
-            if(FractionState == FractionStates.numerator)
+            if (ComplexState == ComplexStates.real)
             {
-                FractionState = FractionStates.denominator;
-                Str = Str.Remove(Str.Length - 1);
+                ComplexState = ComplexStates.imaginary;
+                Str = Str.Remove(Str.Length - 1); /// ???????
             }
         }
+
         public override void AddSign(char sign)
         {
             if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != ':' && Str.Last() != '*')
@@ -51,10 +51,10 @@ namespace PO2
                 Str += sign;
             }
 
-            FractionState = FractionStates.numerator;
+            ComplexState = ComplexStates.real;
         }
 
-        public override void AddMinusFront()
+        public override void AddMinusFront() // вообще убрать
         {
             if (Str[0] != '-')
                 Str = "-" + Str;
@@ -64,22 +64,25 @@ namespace PO2
 
         public override void AddDigit(int a)
         {
+            
             string s = Converter.longToChar(a).ToString();
             //string s = a.ToString();
+
+
             if (isZero())
             {
-                if (Str.Length == 3)
-                    Str = s + "/1";
+                if (Str.Length == 5)
+                    Str = s + "+i*0";
                 else
-                    Str = "-" + s + "/1";
+                    Str = "-" + s + "+i*0";
             }
             else
             {
-                if(FractionState == FractionStates.numerator)
+                if (ComplexState == ComplexStates.real)
                 {
-                    if (Str.IndexOf("/1", Str.Length - 2) == Str.Length - 2) // если последние 2 сивола - единичный знаметель - удалить их 
-                        Str = Str.Remove(Str.Length - 2);
-                    Str += s + "/1";
+                    if (Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4) // если последние 4 сивола - нулевая мнимая часть - удалить их 
+                        Str = Str.Remove(Str.Length - 4);
+                    Str += s + "+i*0";
 
                     // добавлять символ
                     // добавлять единичный знаменатель
@@ -89,12 +92,11 @@ namespace PO2
                 }
                 else
                 {
-                    if(!(Str.Last() == '/' && s == "0")) // случай ввода знаменателя = 0
+                    if (!(Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4 && s == "0")) // случай ввода мнимой части = 0, при этом же значении мнимой части
                         Str += s;
-                    
                 }
-                    
             }
+            
         }
 
         public override void AddZero()
@@ -105,44 +107,46 @@ namespace PO2
 
         public override void Backspace()
         {
+            
             if (!isZero())
             {
-                if(Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
+                if (Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
                     Str = Str.Remove(Str.Length - 1, 1);
-                else if (FractionState == FractionStates.numerator)
+                else if (ComplexState == ComplexStates.real)
                 {
-                    Str = Str.Remove(Str.Length - 3, 1);
+                    Str = Str.Remove(Str.Length - 5, 1);
 
                     // если удалили всё число
-                    if (Str.Length == 2 || Str.Length == 3 && Str.First()=='-')
+                    if (Str.Length == 4 || Str.Length == 5 && Str.First() == '-')
                     {
                         Str = Zero;
                     }
                     else
                     {
                         // если удалили всё крайнее число
-                        string last = Str.Substring(Str.Length - 3, 1);
+                        string last = Str.Substring(Str.Length - 5, 1);
                         if (last == "+" || last == "-" || last == "*" || last == ":")
-                            Str = Str.Remove(Str.Length - 2, 2);
+                            Str = Str.Remove(Str.Length - 5, 4);
                     }
                 }
                 else
                 {
                     if (Str.Last().ToString() == Delim)
                     {
-                        FractionState = FractionStates.numerator;
-                        Str = Str + "1";
+                        ComplexState = ComplexStates.real;
+                        Str = Str + "0";
                         Backspace();
                     }
                     else
                         Str = Str.Remove(Str.Length - 1, 1);
                 }
             }
+            
         }
 
-        public override void Clear() { Str = Zero; FractionState = FractionStates.numerator; }
+        public override void Clear() { Str = Zero; ComplexState = ComplexStates.real; }
 
-        public FEditor() { Str = Zero; }
+        public CEditor() { Str = Zero; }
 
         public void Edit() { }
 

@@ -69,8 +69,6 @@ namespace PO2
             Str += ch;
         }
 
-
-
         public override void AddZero() 
         {
             if (!isZero())

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AEditor.cs" />
+    <Compile Include="CEditor.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="FEditor.cs" />
     <Compile Include="Form1.cs">
@@ -62,6 +63,7 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="TANumber.cs" />
+    <Compile Include="TComp.cs" />
     <Compile Include="TCtrl.cs" />
     <Compile Include="TFrac.cs" />
     <Compile Include="TProc.cs" />

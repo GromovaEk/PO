@@ -53,6 +53,8 @@ namespace PO2
                 Editor = new PEditor();
             else if (typeof(T).Name == "TFrac")
                 Editor = new FEditor();
+            else if (typeof(T).Name == "TComp")
+                Editor = new CEditor();
 
             Processor = new TProc<T>();
             Memory = new TMemory<T>();
@@ -77,7 +79,16 @@ namespace PO2
                 
                 else
                 {
-                    int start = Editor.Str.IndexOf((char)Processor.Operation, 1);
+                    int start;
+
+                    if (typeof(T).Name == "TComp" && ((char)Processor.Operation=='+' || (char)Processor.Operation == '*')) // ищем второе вхождение + или * с конца строки
+                    {
+                        int start0 = Editor.Str.LastIndexOf((char)Processor.Operation);
+                        start = Editor.Str.LastIndexOf((char)Processor.Operation, start0 - 1);
+                    }
+                    else 
+                        start = Editor.Str.IndexOf((char)Processor.Operation, 1);
+
                     string tmp = Editor.Str.Substring(start + 1);
                     Processor.Rop.SetNumStr(tmp);
                     State = States.r_val;
@@ -174,6 +185,22 @@ namespace PO2
                             (Processor as TProc<TPNumber>).Rop.Acc = Acc;
                             (Processor as TProc<TPNumber>).Rop.P = P;
                         }
+                        else if (typeof(T).Name == "TFrac")
+                        {
+                            (Processor as TProc<TFrac>).Rop.Num.Acc = Acc;
+                            (Processor as TProc<TFrac>).Rop.Den.Acc = Acc;
+
+                            (Processor as TProc<TFrac>).Rop.Num.P = P;
+                            (Processor as TProc<TFrac>).Rop.Den.P = P;
+                        }
+                        else if (typeof(T).Name == "TComp")
+                        {
+                            (Processor as TProc<TComp>).Rop.Re.Acc = Acc;
+                            (Processor as TProc<TComp>).Rop.Im.Acc = Acc;
+
+                            (Processor as TProc<TComp>).Rop.Re.P = P;
+                            (Processor as TProc<TComp>).Rop.Im.P = P;
+                        }
                     }
                 }
                 else if (old_state == States.op)
@@ -189,6 +216,34 @@ namespace PO2
                         (Processor as TProc<TPNumber>).Lop_Res.Acc = Acc;
                         (Processor as TProc<TPNumber>).Rop.Acc = Acc;
                     }
+                    else if (typeof(T).Name == "TFrac")
+                    {
+                        (Processor as TProc<TFrac>).Lop_Res.Num.P = P;
+                        (Processor as TProc<TFrac>).Lop_Res.Den.P = P;
+
+                        (Processor as TProc<TFrac>).Rop.Num.P = P;
+                        (Processor as TProc<TFrac>).Rop.Den.P = P;
+
+                        (Processor as TProc<TFrac>).Lop_Res.Num.Acc = Acc;
+                        (Processor as TProc<TFrac>).Lop_Res.Den.Acc = Acc;
+
+                        (Processor as TProc<TFrac>).Rop.Num.Acc = Acc;
+                        (Processor as TProc<TFrac>).Rop.Den.Acc = Acc;
+                    }
+                    else if (typeof(T).Name == "TComp")
+                    {
+                        (Processor as TProc<TComp>).Lop_Res.Re.P = P;
+                        (Processor as TProc<TComp>).Lop_Res.Im.P = P;
+
+                        (Processor as TProc<TComp>).Rop.Re.P = P;
+                        (Processor as TProc<TComp>).Rop.Im.P = P;
+
+                        (Processor as TProc<TComp>).Lop_Res.Re.Acc = Acc;
+                        (Processor as TProc<TComp>).Lop_Res.Im.Acc = Acc;
+
+                        (Processor as TProc<TComp>).Rop.Re.Acc = Acc;
+                        (Processor as TProc<TComp>).Rop.Im.Acc = Acc;
+                    }
                 }
 
 
@@ -198,15 +253,21 @@ namespace PO2
             // Смена знака
             if (i == 23)
             {
-                if(!Editor.isZero())
+                /*if(!Editor.isZero())
                 {
                     if (Processor.Lop_Res.ValueStr.First() != '-')
                         Processor.Lop_Res.SetNumStr("-" + Processor.Lop_Res.ValueStr);
                     else
                         Processor.Lop_Res.SetNumStr(Processor.Lop_Res.ValueStr.Substring(1));
                     Editor.AddMinusFront();
+                }*/
+
+                if (!Editor.isZero())
+                {
+
                 }
-                
+
+
                 return Editor.Str;
             }
 
@@ -351,6 +412,30 @@ namespace PO2
                     {
                         (Memory as TMemory<TFrac>).FNumber.Num.P = P;
                         (Memory as TMemory<TFrac>).FNumber.Den.P = P;
+                    }
+                    return Editor.Str;
+                }
+                else if (typeof(T).Name == "TComp")
+                {
+                    P = i - 30;
+
+                    (Processor as TProc<TComp>).Lop_Res.Re.P = P;
+                    (Processor as TProc<TComp>).Lop_Res.Im.P = P;
+
+                    (Processor as TProc<TComp>).Rop.Re.P = P;
+                    (Processor as TProc<TComp>).Rop.Im.P = P;
+
+                    Editor.Str = Processor.Lop_Res.ValueStr;
+                    if (State != States.l_val)
+                    {
+                        Editor.Str += (char)Processor.Operation;
+                        if (State == States.r_val)
+                            Editor.Str += Processor.Rop.ValueStr;
+                    }
+                    if (Memory.FState)
+                    {
+                        (Memory as TMemory<TComp>).FNumber.Re.P = P;
+                        (Memory as TMemory<TComp>).FNumber.Im.P = P;
                     }
                     return Editor.Str;
                 }

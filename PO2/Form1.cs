@@ -17,6 +17,7 @@ namespace PO2
             InitializeComponent();
             CtrlTPN = new TCtrl<TPNumber>();
             CtrlTF = new TCtrl<TFrac>();
+            CtrlTC = new TCtrl<TComp>();
             Buttons = new Button[16];
 
             Buttons[0] = button0;
@@ -41,7 +42,8 @@ namespace PO2
 
         private TCtrl<TPNumber> CtrlTPN;
         private TCtrl<TFrac> CtrlTF;
-        
+        private TCtrl<TComp> CtrlTC;
+
         private enum ControlType {
             PController,            
             FractionController,     
@@ -71,6 +73,15 @@ namespace PO2
                     Buttons[i].Enabled = i < n ? true : false;
                 richTextBox1.Text = CtrlTF.Command(30 + n); 
                 MemoryValue.Text = CtrlTF.Memory.GetStr();
+            }
+            if (controller_type == ControlType.ComplexController)
+            {
+                label1.Focus();
+                int n = Convert.ToInt32(domainUpDown1.SelectedItem.ToString());
+                for (int i = 1; i < 16; i++)
+                    Buttons[i].Enabled = i < n ? true : false;
+                richTextBox1.Text = CtrlTC.Command(30 + n);
+                MemoryValue.Text = CtrlTC.Memory.GetStr();
             }
         }
 
@@ -174,6 +185,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(0);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(0);
+                    break;
             }
 
         }
@@ -190,6 +204,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(1);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(1);
+                    break;
             }
         }
 
@@ -204,6 +221,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(2);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(2);
                     break;
             }
         }
@@ -220,6 +240,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(3);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(3);
+                    break;
             }
         }
 
@@ -234,6 +257,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(4);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(4);
                     break;
             }
         }
@@ -250,6 +276,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(5);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(5);
+                    break;
             }
         }
 
@@ -264,6 +293,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(6);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(6);
                     break;
             }
         }
@@ -280,6 +312,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(7);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(7);
+                    break;
             }
         }
 
@@ -294,6 +329,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(8);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(8);
                     break;
             }
         }
@@ -310,6 +348,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(9);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(9);
+                    break;
             }
         }
 
@@ -324,6 +365,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(10);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(10);
                     break;
             }
 
@@ -341,6 +385,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(11);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(11);
+                    break;
             }
         }
 
@@ -355,6 +402,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(12);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(12);
                     break;
             }
 
@@ -372,6 +422,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(13);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(13);
+                    break;
             }
         }
 
@@ -387,6 +440,9 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(14);
                     break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(14);
+                    break;
             }
         }
 
@@ -401,6 +457,9 @@ namespace PO2
                     break;
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(15);
+                    break;
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(15);
                     break;
             }
         }
@@ -419,6 +478,11 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(16);
                     MemoryValue.Text = CtrlTF.Memory.GetStr();
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(16);
+                    MemoryValue.Text = CtrlTC.Memory.GetStr();
                     break;
             }
 
@@ -440,6 +504,11 @@ namespace PO2
                     richTextBox1.Text = CtrlTF.Command(17);
                     MemoryValue.Text = CtrlTF.Memory.GetStr();
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(17);
+                    MemoryValue.Text = CtrlTC.Memory.GetStr();
+                    break;
             }
         }
         // Взять из памяти
@@ -455,6 +524,11 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(18);
                     MemoryValue.Text = CtrlTF.Memory.GetStr();
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(18);
+                    MemoryValue.Text = CtrlTC.Memory.GetStr();
                     break;
             }
         }
@@ -474,6 +548,11 @@ namespace PO2
                     richTextBox1.Text = CtrlTF.Command(19);
                     MemoryValue.Text = CtrlTF.Memory.GetStr();
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(19);
+                    MemoryValue.Text = CtrlTC.Memory.GetStr();
+                    break;
             }
 
         }
@@ -490,6 +569,10 @@ namespace PO2
 
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(20);
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(20);
                     break;
             }
         }
@@ -508,6 +591,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(21);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(21);
+                    break;
             }
 
         }
@@ -525,6 +612,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(22);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(22);
+                    break;
             }
         }
 
@@ -541,6 +632,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(23);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(23);
+                    break;
             }
         }
 
@@ -556,6 +651,10 @@ namespace PO2
 
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(24);
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(24);
                     break;
             }
         }
@@ -574,6 +673,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(25);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(25);
+                    break;
             }
         }
 
@@ -589,6 +692,10 @@ namespace PO2
 
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(26);
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(26);
                     break;
             }
         }
@@ -607,6 +714,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(27);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(27);
+                    break;
             }
         }
 
@@ -622,6 +733,10 @@ namespace PO2
 
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(28);
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(28);
                     break;
             }
         }
@@ -639,6 +754,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(29);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(29);
+                    break;
             }
         }
 
@@ -655,6 +774,10 @@ namespace PO2
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(30);
                     break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(30);
+                    break;
             }
         }
 
@@ -670,6 +793,10 @@ namespace PO2
 
                 case ControlType.FractionController:
                     richTextBox1.Text = CtrlTF.Command(31);
+                    break;
+
+                case ControlType.ComplexController:
+                    richTextBox1.Text = CtrlTC.Command(31);
                     break;
             }
         }
@@ -729,6 +856,14 @@ namespace PO2
                     richTextBox1.Text = CtrlTF.Command(57);
                 MemoryValue.Text = CtrlTF.Memory.GetStr();
             }
+            else if (controller_type == ControlType.ComplexController)
+            {
+                if (checkBox3.Checked)
+                    richTextBox1.Text = CtrlTC.Command(58);
+                else
+                    richTextBox1.Text = CtrlTC.Command(57);
+                MemoryValue.Text = CtrlTC.Memory.GetStr();
+            }
         }
 
         private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
@@ -776,8 +911,8 @@ namespace PO2
 
         private void простаяДробьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 1; i < 16; i++)
-                Buttons[i].Enabled = i < 10 ? true : false;
+            //for (int i = 1; i < 16; i++)
+                //Buttons[i].Enabled = i < 10 ? true : false;
 
             //domainUpDown1.Enabled = false;
             domainUpDown2.Enabled = false;
@@ -796,7 +931,17 @@ namespace PO2
 
         private void комплексноеЧислоToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            domainUpDown2.Enabled = false;
+            checkedListBox1.Enabled = false;
+            buttonComma.Text = "i*";
+            buttonComma.Enabled = true;
 
+            controller_type = ControlType.ComplexController;
+            if (checkBox3.Checked)
+                CtrlTC.Memory.FState = true;
+
+            richTextBox1.Text = CtrlTC.Editor.Str;
+            MemoryValue.Text = CtrlTC.Memory.GetStr();
         }
     }
 }

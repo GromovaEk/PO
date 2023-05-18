@@ -106,7 +106,7 @@ namespace PO2
             return ValueStr.Substring(index + 1, ValueStr.Length - index + 1);
         }
 
-        // Числ и Знаменатель перевести в строку
+        
         protected override TANumber Add(TANumber Den)
         {
             double c = this.Num.Value * (Den as TFrac).Den.Value +
@@ -181,11 +181,16 @@ namespace PO2
                 return new TFrac(c, d);
         }
 
+        protected TANumber Minus()
+        {
+            return this.Substract(new TFrac(0, 1));
+
+        }
+
         protected override TANumber NeutralMul()
         {
             return new TFrac(1, 1);
         }
-
         public override object Clone()
         {
             return new TFrac(Num.Value, Den.Value);
