@@ -19,8 +19,8 @@ namespace PO2
         public const string lbrace = "[";
         public const string rbrace = "]";
 
-        private string realStr;
-        private string imStr;
+        private string realStr = "0";
+        private string imStr = "0";
 
         private static string ConstructNumStr(string real, string im)
         {

@@ -158,8 +158,14 @@ namespace PO2
                 Backspace();
             else
             {
-                while (!LastIsSign())
-                    Backspace();
+                int i = 0;
+                int j = Str.Length - 1;
+                while (!IsSign(Str[j]))
+                {
+                    j--;
+                    i++;
+                }
+                Str = Str.Substring(0, Str.Length - i);
             }
         }
 
