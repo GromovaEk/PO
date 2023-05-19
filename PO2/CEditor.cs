@@ -76,12 +76,20 @@ namespace PO2
             ComplexState = ComplexStates.real;
         }
 
-        public override void AddMinusFront() // вообще убрать
+        public override void AddMinusFront() 
         {
-            if (Str[0] != '-')
-                Str = "-" + Str;
+            if (ComplexState == ComplexStates.real)
+            {
+                if (realStr[0] != '-')
+                    realStr = "-" + realStr;
+            }
             else
-                Str = Str.Substring(1);
+            {
+                if (imStr[0] != '-')
+                    imStr = "-" + imStr;
+            }
+            PopLastNumber();
+            Str += ConstructNumStr(realStr, imStr);
         }
 
         public override void AddDigit(int a)
@@ -115,40 +123,7 @@ namespace PO2
                 }
 
                 Str += ConstructNumStr(realStr, imStr);
-            }
-
-
-
-            //if (IsZero())
-            //{
-            //    if (Str.Length == 5)
-            //        Str = s + "+i*0";
-            //    else
-            //        Str = "-" + s + "+i*0";
-            //}
-            //else
-            //{
-            //    if (ComplexState == ComplexStates.real)
-            //    {
-            //        if (Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4) // если последние 4 сивола - нулевая мнимая часть - удалить их 
-            //            Str = Str.Remove(Str.Length - 4);
-            //        Str += s + "+i*0";
-
-            //        // добавлять символ
-            //        // добавлять единичный знаменатель
-
-            //        //int index = Str.IndexOf(Delim);
-            //        //Str = Str.Substring(0, index) + s + "/1";
-            //    }
-            //    else
-            //    {
-            //        if (!(Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4 && s == "0")) // случай ввода мнимой части = 0, при этом же значении мнимой части
-            //            Str += s;
-            //    }
-            //}
-
-
-            
+            }            
         }
 
         public override void AddZero()
@@ -159,6 +134,8 @@ namespace PO2
 
         public override void Backspace()
         {
+            if (IsZero())
+                return;
             if (LastIsSign())
                 Str = Str.Substring(0, Str.Length - 1);
             else
