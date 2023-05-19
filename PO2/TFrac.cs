@@ -15,9 +15,16 @@ namespace PO2
 
         public override string ToString()
         {
+<<<<<<< HEAD
             return Converter.Convert(Num.Value, Num.P, Num.Acc, Delim) + FEditor.Delim +
                     Converter.Convert(Den.Value, Den.P, Den.Acc, Delim);
+=======
+            return Converter.Convert(Num.Value, Num.P, Num.Acc, FEditor.Delim) 
+                + FEditor.Delim + Converter.Convert(Den.Value, Den.P, Den.Acc, FEditor.Delim);
+>>>>>>> unintentional_branch
         }
+
+
 
         private int p;
 

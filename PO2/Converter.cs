@@ -20,7 +20,7 @@ namespace PO2
         /// <param name="c">Точность дробной части</param>
         /// <param name="delim">Символ разделителя</param>
         /// <returns></returns>
-        public static string Convert(double n, int p, int c, char delim)
+        public static string Convert(double n, int p, int c, string delim)
         {
             string res = ConverP10.Do(Math.Abs(n), p, c, delim);
             if (n < 0)
@@ -81,7 +81,7 @@ namespace PO2
             /// <param name="c"></param>
             /// <param name="delim"></param>
             /// <returns></returns>
-            public static string Do(double n, int p, int c, char delim)
+            public static string Do(double n, int p, int c, string delim)
             {
                 if (n == 0)
                     return "0";

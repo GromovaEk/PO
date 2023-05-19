@@ -19,7 +19,7 @@ namespace PO2
 
         public override string ToString()
         {
-            return Converter.Convert(Value, p, acc, Delim);
+            return Converter.Convert(Value, p, acc, PEditor.Delim);
         }
 
         //public override string ValueStr { set; get; }

@@ -935,7 +935,7 @@ namespace PO2
         {
             domainUpDown2.Enabled = false;
             checkedListBox1.Enabled = false;
-            buttonComma.Text = "i*";
+            buttonComma.Text = CEditor.Delim;
             buttonComma.Enabled = true;
 
             controller_type = ControlType.ComplexController;

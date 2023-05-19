@@ -8,13 +8,13 @@ namespace PO2
 {
     class FEditor : AEditor
     {
-        public string Zero
+        public static string Delim = "|";
+        
+        public static string Zero
         {
             get { return "0" + Delim + "1"; }
-            private set { }
+            //private set { }
         }
-
-        public static string Delim = "|";
 
         public enum FractionStates { numerator = 0, denominator }
         FractionStates FractionState { get; set; }
@@ -103,7 +103,7 @@ namespace PO2
                 }
                 else
                 {
-                    if(!(Str.Last() == '/' && s == "0")) // случай ввода знаменателя = 0
+                    if(!(Str.Last() == '|' && s == "0")) // случай ввода знаменателя = 0
                         Str += s;
                     
                 }
@@ -132,7 +132,7 @@ namespace PO2
                     {
                         Str = Zero;
                     }
-                    else
+                    else if (Str.Length > 3)
                     {
                         // если удалили всё крайнее число
                         Str = Str.Substring(0, Str.Length - 2);
