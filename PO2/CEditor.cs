@@ -8,15 +8,38 @@ namespace PO2
 {
     class CEditor : AEditor
     {
-        public const string Zero = "0+i*0"; //??
-        public const string Delim = "+i*";
+        public static string Delim = ";";
+
+        public static string Zero
+        {
+            get { return ConstructNumStr("0", "0");  }
+            //private set { }
+        }
+
+        public const string lbrace = "[";
+        public const string rbrace = "]";
+
+        private string realStr;
+        private string imStr;
+
+        private static string ConstructNumStr(string real, string im)
+        {
+            return lbrace + real + Delim + " " + im + "i" + rbrace;
+        }
+
+
 
         public enum ComplexStates { real = 0, imaginary }
         ComplexStates ComplexState { get; set; }
 
         public override bool IsZero()
         {
-            return (Str == Zero || Str == "-" + Zero); //????
+            return (Str == Zero);
+        }
+
+        public bool IsSign(char ch)
+        {
+            return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
         }
 
         public override void Add(char ch)
@@ -34,19 +57,18 @@ namespace PO2
             if (ComplexState == ComplexStates.real)
             {
                 ComplexState = ComplexStates.imaginary;
-                Str = Str.Remove(Str.Length - 1); /// ???????
+                imStr = "";
             }
+            PopLastNumber();
+            Str += ConstructNumStr(realStr, imStr);
         }
 
         public override void AddSign(char sign)
         {
-            if (Str.Last() != '+' && Str.Last() != '-' && Str.Last() != ':' && Str.Last() != '*')
-            {
+            if (!LastIsSign())
                 Str += sign;
-            }
             else
             {
-                //str[str.Length - 1] = sign;
                 Str = Str.Substring(0, Str.Length - 1);
                 Str += sign;
             }
@@ -66,36 +88,66 @@ namespace PO2
         {
             
             string s = Converter.longToChar(a).ToString();
-            //string s = a.ToString();
 
-
-            if (IsZero())
+            if (LastIsSign())
             {
-                if (Str.Length == 5)
-                    Str = s + "+i*0";
-                else
-                    Str = "-" + s + "+i*0";
+                Str += ConstructNumStr(s, "0");
+                realStr = s;
+                imStr = "0";
             }
             else
             {
+                PopLastNumber();
                 if (ComplexState == ComplexStates.real)
                 {
-                    if (Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4) // если последние 4 сивола - нулевая мнимая часть - удалить их 
-                        Str = Str.Remove(Str.Length - 4);
-                    Str += s + "+i*0";
-
-                    // добавлять символ
-                    // добавлять единичный знаменатель
-
-                    //int index = Str.IndexOf(Delim);
-                    //Str = Str.Substring(0, index) + s + "/1";
+                    if (realStr != "0")
+                        realStr += s;
+                    else
+                        realStr = s;
                 }
+                    
                 else
                 {
-                    if (!(Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4 && s == "0")) // случай ввода мнимой части = 0, при этом же значении мнимой части
-                        Str += s;
+                    if (imStr != "0")
+                        imStr += s;
+                    else
+                        imStr = s;
                 }
+
+                Str += ConstructNumStr(realStr, imStr);
             }
+
+
+
+            //if (IsZero())
+            //{
+            //    if (Str.Length == 5)
+            //        Str = s + "+i*0";
+            //    else
+            //        Str = "-" + s + "+i*0";
+            //}
+            //else
+            //{
+            //    if (ComplexState == ComplexStates.real)
+            //    {
+            //        if (Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4) // если последние 4 сивола - нулевая мнимая часть - удалить их 
+            //            Str = Str.Remove(Str.Length - 4);
+            //        Str += s + "+i*0";
+
+            //        // добавлять символ
+            //        // добавлять единичный знаменатель
+
+            //        //int index = Str.IndexOf(Delim);
+            //        //Str = Str.Substring(0, index) + s + "/1";
+            //    }
+            //    else
+            //    {
+            //        if (!(Str.IndexOf("+i*0", Str.Length - 4) == Str.Length - 4 && s == "0")) // случай ввода мнимой части = 0, при этом же значении мнимой части
+            //            Str += s;
+            //    }
+            //}
+
+
             
         }
 
@@ -107,41 +159,31 @@ namespace PO2
 
         public override void Backspace()
         {
-            
-            if (!IsZero())
+            if (LastIsSign())
+                Str = Str.Substring(0, Str.Length - 1);
+            else
             {
-                if (Str.Last() == '+' || Str.Last() == '-' || Str.Last() == '*' || Str.Last() == ':')
-                    Str = Str.Remove(Str.Length - 1, 1);
-                else if (ComplexState == ComplexStates.real)
+                PopLastNumber();
+                if (ComplexState == ComplexStates.real)
                 {
-                    Str = Str.Remove(Str.Length - 5, 1);
-
-                    // если удалили всё число
-                    if (Str.Length == 4 || Str.Length == 5 && Str.First() == '-')
-                    {
-                        Str = Zero;
-                    }
+                    if (realStr.Length == 1)
+                        realStr = "0";
                     else
-                    {
-                        // если удалили всё крайнее число
-                        string last = Str.Substring(Str.Length - 5, 1);
-                        if (last == "+" || last == "-" || last == "*" || last == ":")
-                            Str = Str.Remove(Str.Length - 5, 4);
-                    }
+                        realStr = realStr.Substring(0, realStr.Length - 1);
                 }
                 else
                 {
-                    if (Str.Last().ToString() == Delim)
+                    if (imStr.Length == 1)
                     {
+                        imStr = "0";
                         ComplexState = ComplexStates.real;
-                        Str = Str + "0";
-                        Backspace();
                     }
                     else
-                        Str = Str.Remove(Str.Length - 1, 1);
+                        imStr = imStr.Substring(0, imStr.Length - 1);
                 }
+                Str += ConstructNumStr(realStr, imStr);
             }
-            
+
         }
 
         public override void Clear() { Str = Zero; ComplexState = ComplexStates.real; }
@@ -152,17 +194,23 @@ namespace PO2
 
         public override void PopLastNumber()
         {
-            throw new NotImplementedException();
+            int ind = Str.LastIndexOf("[");
+            //if (ind != 0)
+            Str = Str.Substring(0, ind);
         }
 
         public override string GetLastNumber()
         {
-            throw new NotImplementedException();
+            int ind = Str.LastIndexOf("[");
+            if (!LastIsSign())
+                return Str.Substring(ind);
+            else
+                return Str.Substring(0, Str.Length - 1);
         }
 
         public override bool LastIsSign()
         {
-            throw new NotImplementedException();
+            return IsSign(Str.Last());
         }
     }
 }

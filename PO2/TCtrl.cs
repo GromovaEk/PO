@@ -54,7 +54,7 @@ namespace PO2
                 Editor = new PEditor();
             else if (typeof(T).Name == "TFrac")
                 Editor = new FEditor();
-            else if (typeof(T).Name == "TComp")
+            else if (typeof(T).Name == "TCNumber")
                 Editor = new CEditor();
 
             Processor = new TProc<T>();
@@ -66,7 +66,18 @@ namespace PO2
 
         public void ClearAll()
         {
-            Editor.Str = PEditor.Zero;
+            switch(typeof(T).Name)
+            {
+                case "TPNumber":
+                    Editor.Str = PEditor.Zero;
+                    break;
+                case "TFrac":
+                    Editor.Str = FEditor.Zero;
+                    break;
+                case "TCNumber":
+                    Editor.Str = CEditor.Zero;
+                    break;
+            }
             Processor.Clear();
             State = States.l_val;
         }
@@ -83,19 +94,19 @@ namespace PO2
                     
                     
                 if (State == States.l_val)
-                Processor.Lop_Res.SetNumStr(Editor.Str);
+                    Processor.Lop_Res.SetNumStr(Editor.Str);
                 
                 else
                 {
                     int start;
 
-                    if (typeof(T).Name == "TComp" && ((char)Processor.Operation=='+' || (char)Processor.Operation == '*')) // ищем второе вхождение + или * с конца строки
-                    {
-                        int start0 = Editor.Str.LastIndexOf((char)Processor.Operation);
-                        start = Editor.Str.LastIndexOf((char)Processor.Operation, start0 - 1);
-                    }
-                    else 
-                        start = Editor.Str.IndexOf((char)Processor.Operation, 1);
+                    //if (typeof(T).Name == "TComp" && ((char)Processor.Operation=='+' || (char)Processor.Operation == '*')) // ищем второе вхождение + или * с конца строки
+                    //{
+                    //    int start0 = Editor.Str.LastIndexOf((char)Processor.Operation);
+                    //    start = Editor.Str.LastIndexOf((char)Processor.Operation, start0 - 1);
+                    //}
+                    //else 
+                    start = Editor.Str.IndexOf((char)Processor.Operation, 1);
 
                     string tmp = Editor.Str.Substring(start + 1);
                     Processor.Rop.SetNumStr(tmp);
@@ -217,9 +228,9 @@ namespace PO2
             // Ввод разделителя
             if (i == 24)
             {
-                if (typeof(T).Name == "TPNumber")
-                    if (!floatMode)
-                        return Editor.Str;
+                //if (typeof(T).Name == "TPNumber")
+                //    if (!floatMode)
+                //        return Editor.Str;
 
                 if (State == States.l_val || State == States.r_val)
                     Editor.AddSeparator();
@@ -253,7 +264,6 @@ namespace PO2
                 {                  
                     Editor.AddSign(ch);
                     Processor.Operation = (TProc<T>.Operations)ch;
-                    //Processor.ResetFunc();
                     State = States.op;
                 }
                 else
@@ -285,7 +295,7 @@ namespace PO2
                         Processor.Function = TProc<T>.Functions.Sqr;
                         T temp = (T)Processor.Lop_Res.Clone();
                         Processor.Lop_Res = (T)Processor.Rop.Clone();
-                        Processor.ExecFunction();
+                        Processor.Exec();
                         Editor.PopLastNumber();
                         Editor.Str += Processor.Lop_Res.ToString();
                         Processor.Rop = (T)Processor.Lop_Res.Clone();
