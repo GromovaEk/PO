@@ -167,7 +167,13 @@ namespace PO2
                 if (ComplexState == ComplexStates.real)
                 {
                     if (realStr.Length == 1)
-                        realStr = "0";
+                    {
+                        if (realStr != "0")
+                            realStr = "0";
+                        else
+                            return;
+                    }
+                        
                     else
                         realStr = realStr.Substring(0, realStr.Length - 1);
                 }
